@@ -7,7 +7,7 @@ const LED_WIDTH = 32;
 const LED_HEIGHT = 11;
 
 const isValidPacmanLocation = () => {
-    
+
 }
 
 const movementOperators = {
@@ -42,25 +42,25 @@ const App = () => {
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ,1, 1, 1, 1, 1],
     ])
 
-    setInterval(() => {
-        const op = movementOperators.fullyRandom()
-        if (op.reduce((prev, curr) => { return prev + curr}, 0) > 1) {
-            throw new Error('Only one direction should be passed.')
-        }
-        const [up, down, left, right] = op;
-        if (up) {
-            setPacmanLocation([pacmanLocation[0] - 1, pacmanLocation[1]])
-        }
-        if (down) {
-            setPacmanLocation([pacmanLocation[0] + 1, pacmanLocation[1]])
-        }
-        if (left) {
-            setPacmanLocation([pacmanLocation[0], pacmanLocation[1] - 1])
-        }
-        if (right) {
-            setPacmanLocation([pacmanLocation[0], pacmanLocation[1] + 1])
-        }
-    }, 1000)
+    // setInterval(() => {
+    //     const op = movementOperators.fullyRandom()
+    //     if (op.reduce((prev, curr) => { return prev + curr}, 0) > 1) {
+    //         throw new Error('Only one direction should be passed.')
+    //     }
+    //     const [up, down, left, right] = op;
+    //     if (up) {
+    //         setPacmanLocation([pacmanLocation[0] - 1, pacmanLocation[1]])
+    //     }
+    //     if (down) {
+    //         setPacmanLocation([pacmanLocation[0] + 1, pacmanLocation[1]])
+    //     }
+    //     if (left) {
+    //         setPacmanLocation([pacmanLocation[0], pacmanLocation[1] - 1])
+    //     }
+    //     if (right) {
+    //         setPacmanLocation([pacmanLocation[0], pacmanLocation[1] + 1])
+    //     }
+    // }, 1000)
 
     const calculatedBoardState = boardState
     calculatedBoardState[pacmanLocation[0]][pacmanLocation[1]] = 2
