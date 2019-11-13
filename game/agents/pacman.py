@@ -7,26 +7,30 @@ class Pacman:
         self._location = spawnLocation
 
     def handle_move(self, move):
+        proposed_location = self.calculate_move_location(move)
+
+        if self.is_valid_location(proposed_location):
+            self._location = proposed_location
+
+        return self._location
+
+    def calculate_move_location(self, move):
         if move == 'U':
-            self._location[1] = self._location[1] - 1
-            return self._location
+            return [self._location[0], self._location[1] - 1]
 
         if move == 'D':
-            self._location[1] = self._location[1] + 1
-            return self._location
+            return [self._location[0], self._location[1] + 1]
 
         if move == 'L':
-            self._location[0] = self._location[0] - 1
-            return self._location
+            return [self._location[0] + 1, self._location[1]]
 
         if move == 'R':
-            self._location[0] = self._location[0] + 1
-            return self._location
+            return [self._location[0] - 1, self._location[1]]
 
         if move == '':
             return self._location
 
         raise Exception('Invalid Move Identifier')
 
-    def is_valid_move(self):
-        return False
+    def is_valid_location(self, location):
+        return self._game.state[location[1]][location[0]] == 0
