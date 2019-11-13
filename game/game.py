@@ -1,7 +1,7 @@
 import copy
 from agents.pacman import Pacman
 from agents.pinky import Pinky
-from moves import Moves
+
 
 class Game:
     complete = False
