@@ -1,4 +1,3 @@
-import time
 import copy
 from agents.pacman import Pacman
 from agents.pinky import Pinky
@@ -59,5 +58,3 @@ while board.complete == False:
 
     plt.imshow(board.calculate_board())
     plt.show()
-
-    # time.sleep(5)
