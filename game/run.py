@@ -1,6 +1,7 @@
 from matplotlib import pyplot as plt
 from game import Game
 from moves import Moves
+from rgb_mapper import board_to_rgb
 
 INIT_BOARD_STATE = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -22,7 +23,7 @@ INIT_PINKY_LOCATION = [26, 4]
 
 board = Game(INIT_BOARD_STATE, INIT_PACMAN_LOCATION, INIT_PINKY_LOCATION)
 
-plt.imshow(board.calculate_board())
+plt.imshow(board_to_rgb(board.calculate_board()))
 plt.show()
 
 i = 1
@@ -31,7 +32,7 @@ while board.complete is False:
 
     board.handle_moves(Moves.fully_random(), Moves.fully_random())
 
-    plt.imshow(board.calculate_board())
+    plt.imshow(board_to_rgb(board.calculate_board()))
     plt.show()
 
     i = i + 1
