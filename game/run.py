@@ -1,6 +1,9 @@
 from matplotlib import pyplot as plt
 from game import Game
 from moves import ValidRandomWithMomentem
+from moves import Moves
+from rgb_mapper import board_to_rgb
+
 
 INIT_BOARD_STATE = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -33,7 +36,7 @@ board = Game(
     INIT_CLYDE_LOCATION
 )
 
-plt.imshow(board.calculate_board())
+plt.imshow(board_to_rgb(board.calculate_board()))
 plt.show()
 
 blinky_move_factory = ValidRandomWithMomentem()
@@ -54,7 +57,7 @@ while board.complete is False:
         clyde_move_factory.generate_move(board.clyde)
     )
 
-    plt.imshow(board.calculate_board())
+    plt.imshow(board_to_rgb(board.calculate_board()))
     plt.show()
 
     i = i + 1
