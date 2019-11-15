@@ -28,15 +28,21 @@ void setup() {
 
 void loop() {
   while (Serial.available()) {
-    int idx = Serial.readStringUntil(',').toInt();
-    int r = Serial.readStringUntil(',').toInt();
-    int g = Serial.readStringUntil(',').toInt();
-    int b = Serial.readStringUntil('\n').toInt();
-
-    pixels.setPixelColor(idx, pixels.Color(r, g, b));
-    pixels.show();
-    
-    
+    int op = Serial.readStringUtil(',').toInt();
+    if (op = 0) {
+//    Turn Pixels Off.
+      pixels.show();
+    } else if (op = 1) {
+      //set pixel
+      int idx = Serial.readStringUntil(',').toInt();
+      int r = Serial.readStringUntil(',').toInt();
+      int g = Serial.readStringUntil(',').toInt();
+      int b = Serial.readStringUntil('\n').toInt();
+      pixels.setPixelColor(idx, pixels.Color(r, g, b));
+    } else if (op = 2) {
+      // publish
+      pixels.show();
+    }    
   }
  
 }
