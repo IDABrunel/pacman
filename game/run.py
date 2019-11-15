@@ -2,7 +2,7 @@ from matplotlib import pyplot as plt
 from game import Game
 from moves import ValidRandomWithMomentem
 from rgb_mapper import board_to_rgb
-
+from arduino import ArduinoRGBMatrix
 
 INIT_BOARD_STATE = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -35,14 +35,18 @@ board = Game(
     INIT_CLYDE_LOCATION
 )
 
-plt.imshow(board_to_rgb(board.calculate_board()))
-plt.show()
+# plt.imshow(board_to_rgb(board.calculate_board()))
+# plt.show()
 
 blinky_move_factory = ValidRandomWithMomentem()
 pinky_move_factory = ValidRandomWithMomentem()
 inky_move_factory = ValidRandomWithMomentem()
 clyde_move_factory = ValidRandomWithMomentem()
 pacman_move_factory = ValidRandomWithMomentem()
+
+arduino_matrix = ArduinoRGBMatrix([], 60, 20, False)
+
+arduino_matrix.send_full(board_to_rgb(board.calculate_board()))
 
 i = 1
 while board.complete is False:
@@ -56,7 +60,9 @@ while board.complete is False:
         clyde_move_factory.generate_move(board.clyde)
     )
 
-    plt.imshow(board_to_rgb(board.calculate_board()))
-    plt.show()
+    arduino_matrix.send_update(board_to_rgb(board.calculate_board()))
+
+    # plt.imshow(board_to_rgb(board.calculate_board()))
+    # plt.show()
 
     i = i + 1
