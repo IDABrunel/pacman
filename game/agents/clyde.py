@@ -1,5 +1,5 @@
-class Pinky:
-    id = 4
+class Clyde:
+    id = 6
 
     def __init__(self, game, spawnLocation):
         self._game = game
