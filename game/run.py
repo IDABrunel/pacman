@@ -1,7 +1,6 @@
 from matplotlib import pyplot as plt
 from game import Game
 from moves import ValidRandomWithMomentem
-from moves import Moves
 from rgb_mapper import board_to_rgb
 
 
