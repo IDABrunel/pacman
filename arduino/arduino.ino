@@ -1,3 +1,4 @@
+#include <string.h>
 #include <Adafruit_NeoPixel.h>
 #ifdef __AVR__
  #include <avr/power.h> // Required for 16 MHz Adafruit Trinket
@@ -28,19 +29,21 @@ void setup() {
 
 void loop() {
   while (Serial.available()) {
-    int op = Serial.readStringUtil(',').toInt();
-    if (op = 0) {
-//    Turn Pixels Off.
-      pixels.show();
-    } else if (op = 1) {
-      //set pixel
+    int op = Serial.readStringUntil(',').toInt();
+    
+    if (op == 0) {
+      Serial.readStringUntil('\n');
+      pixels.clear();
+    } else if (op == 1) {
+      Serial.println("Setting Pixel");
       int idx = Serial.readStringUntil(',').toInt();
       int r = Serial.readStringUntil(',').toInt();
       int g = Serial.readStringUntil(',').toInt();
       int b = Serial.readStringUntil('\n').toInt();
       pixels.setPixelColor(idx, pixels.Color(r, g, b));
-    } else if (op = 2) {
+    } else if (op == 2) {
       // publish
+      Serial.readStringUntil('\n');
       pixels.show();
     }    
   }
