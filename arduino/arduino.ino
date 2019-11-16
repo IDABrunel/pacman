@@ -34,17 +34,20 @@ void loop() {
     if (op == 0) {
       Serial.readStringUntil('\n');
       pixels.clear();
+      Serial.print('E');
     } else if (op == 1) {
-      Serial.println("Setting Pixel");
       int idx = Serial.readStringUntil(',').toInt();
       int r = Serial.readStringUntil(',').toInt();
       int g = Serial.readStringUntil(',').toInt();
-      int b = Serial.readStringUntil('\n').toInt();
+      int b = Serial.readStringUntil(',').toInt();
+      Serial.readStringUntil('\n');
       pixels.setPixelColor(idx, pixels.Color(r, g, b));
+      Serial.print('E');
     } else if (op == 2) {
       // publish
       Serial.readStringUntil('\n');
       pixels.show();
+      Serial.print('E');
     }    
   }
  
