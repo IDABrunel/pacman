@@ -62,8 +62,10 @@ if args.arduino:
     arduino_matrix.update_by_n_random_pixels(board_to_rgb(board.calculate_board()), 50)
 
 if args.matplotlib:
+    plt.ion()
     plt.imshow(board_to_rgb(board.calculate_board()))
     plt.show()
+    plt.pause(0.01)
 
 i = 1
 while board.complete is False:
@@ -83,5 +85,6 @@ while board.complete is False:
     if args.matplotlib:
         plt.imshow(board_to_rgb(board.calculate_board()))
         plt.show()
+        plt.pause(0.01)
 
     i = i + 1
