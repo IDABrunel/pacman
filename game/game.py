@@ -24,6 +24,22 @@ class Game:
         self.clyde.handle_move(clyde_move)
         self.pacman.handle_move(pacman_move)
 
+        nuggets_left = self.count_nuggets_left()
+        print('Nuggets left', nuggets_left)
+
+        if nuggets_left == 0:
+            self.complete = True
+
+    def count_nuggets_left(self):
+        nuggets = 0
+
+        for y in self.state:
+            for x in y:
+                if x == 8:
+                    nuggets = nuggets + 1
+
+        return nuggets
+
     def calculate_board(self):
         current_state = copy.deepcopy(self.state)
         current_state[self.blinky._location[1]][self.blinky._location[0]] = self.blinky.id
