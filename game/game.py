@@ -1,5 +1,4 @@
 import copy
-from functools import reduce
 from agents.blinky import Blinky
 from agents.pinky import Pinky
 from agents.inky import Inky
@@ -36,7 +35,8 @@ class Game:
 
         for y in self.state:
             for x in y:
-                if x == 8: nuggets = nuggets + 1
+                if x == 8:
+                    nuggets = nuggets + 1
 
         return nuggets
 
