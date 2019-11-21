@@ -3,3 +3,5 @@ dist
 .cache
 package-lock.json
 __pycache__
+images/
+*.gif

@@ -45,6 +45,8 @@ parser.add_argument('--arduino', action='store_true',
                     help='Enables Arduino output')
 parser.add_argument('--nooutput', action='store_true',
                     help='Enables nooutput')
+parser.add_argument('--images', action='store_true',
+                    help='Saves each figure to ./images/xxxx.png')
 
 if len(sys.argv[1:]) == 0:
     parser.print_help()
@@ -69,6 +71,10 @@ if args.matplotlib:
     plt.show()
     plt.pause(0.01)
 
+if args.images:
+    plt.imshow(board_to_rgb(board.calculate_board()))
+    plt.savefig('images/0000.png')
+
 i = 1
 while board.complete is False:
     print('Tick...' + str(i))
@@ -88,5 +94,9 @@ while board.complete is False:
         plt.imshow(board_to_rgb(board.calculate_board()))
         plt.show()
         plt.pause(0.01)
+
+    if args.images:
+        plt.imshow(board_to_rgb(board.calculate_board()))
+        plt.savefig('images/{:04d}.png'.format(i))
 
     i = i + 1
