@@ -38,4 +38,4 @@ class Pacman:
         raise Exception('Invalid Move Identifier')
 
     def is_valid_location(self, location):
-        return self._game.state[location[1]][location[0]] == 0 or self._game.state[location[1]][location[0]] == 8
+        return self._game.state[location[1]][location[0]] in [0, 8]

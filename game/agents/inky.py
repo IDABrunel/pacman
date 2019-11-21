@@ -32,4 +32,4 @@ class Inky:
         raise Exception('Invalid Move Identifier')
 
     def is_valid_location(self, location):
-        return self._game.state[location[1]][location[0]] == 0
+        return self._game.state[location[1]][location[0]] in [0, 8]
