@@ -17,7 +17,7 @@ class ArduinoRGBMatrix:
 
     def __init__(self):
         self.width = 60
-        self.height = 20
+        self.height = 21
         self.current_state = generate_empty_rgb_matrix(self.width, self.height)
         self.serial = serial.Serial('/dev/ttyACM0', 9600)
         time.sleep(1)
