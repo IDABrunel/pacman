@@ -2,9 +2,9 @@ import sys
 import argparse
 from matplotlib import pyplot as plt
 from game import Game
-from moves import ValidRandomWithMomentem
 from rgb_mapper import board_to_rgb
 from arduino import ArduinoRGBMatrix
+from moves import UserInput, ValidRandomWithMomentem
 
 INIT_BOARD_STATE = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -58,7 +58,7 @@ blinky_move_factory = ValidRandomWithMomentem()
 pinky_move_factory = ValidRandomWithMomentem()
 inky_move_factory = ValidRandomWithMomentem()
 clyde_move_factory = ValidRandomWithMomentem()
-pacman_move_factory = ValidRandomWithMomentem()
+pacman_move_factory = UserInput()
 
 if args.arduino:
     arduino_matrix = ArduinoRGBMatrix()
@@ -66,8 +66,10 @@ if args.arduino:
     arduino_matrix.update_by_n_random_pixels(board_to_rgb(board.calculate_board()), 50)
 
 if args.matplotlib:
+    plt.ion()
     plt.imshow(board_to_rgb(board.calculate_board()))
     plt.show()
+    plt.pause(0.05)
 
 if args.images:
     plt.imshow(board_to_rgb(board.calculate_board()))
@@ -78,7 +80,7 @@ while board.complete is False:
     print('Tick...' + str(i))
 
     board.handle_moves(
-        pacman_move_factory.generate_move(board.pacman),
+        pacman_move_factory.generate_move(),
         blinky_move_factory.generate_move(board.blinky),
         pinky_move_factory.generate_move(board.pinky),
         inky_move_factory.generate_move(board.inky),
@@ -91,6 +93,7 @@ while board.complete is False:
     if args.matplotlib:
         plt.imshow(board_to_rgb(board.calculate_board()))
         plt.show()
+        plt.pause(0.05)
 
     if args.images:
         plt.imshow(board_to_rgb(board.calculate_board()))
