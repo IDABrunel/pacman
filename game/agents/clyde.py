@@ -21,10 +21,18 @@ class Clyde:
             return [self._location[0], self._location[1] + 1]
 
         if move == 'L':
-            return [self._location[0] - 1, self._location[1]]
+            if [self._location[0] - 1, self._location[1]] == [0, 5]:
+                # print('This is a teleport')
+                return [self._location[0] + 58, self._location[1]]
+            else:
+                return [self._location[0] - 1, self._location[1]]
 
         if move == 'R':
-            return [self._location[0] + 1, self._location[1]]
+            if [self._location[0] + 1, self._location[1]] == [60, 5]:
+                # print('This is a teleport')
+                return [self._location[0] - 59, self._location[1]]
+            else:
+                return [self._location[0] + 1, self._location[1]]
 
         if move == '':
             return self._location
