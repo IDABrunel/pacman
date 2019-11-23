@@ -27,10 +27,10 @@ class Pacman:
             return [self._location[0], self._location[1] + 1]
 
         if move == 'L':
-            return [self._location[0] + 1, self._location[1]]
+            return [self._location[0] - 1, self._location[1]]
 
         if move == 'R':
-            return [self._location[0] - 1, self._location[1]]
+            return [self._location[0] + 1, self._location[1]]
 
         if move == '':
             return self._location
