@@ -67,11 +67,13 @@ if args.arduino:
 
 if args.matplotlib:
     plt.ion()
+    plt.clf()
     plt.imshow(board_to_rgb(board.calculate_board()))
     plt.show()
     plt.pause(0.05)
 
 if args.images:
+    plt.clf()
     plt.imshow(board_to_rgb(board.calculate_board()))
     plt.savefig('images/0000.png')
 
@@ -91,11 +93,13 @@ while board.complete is False:
         arduino_matrix.update(board_to_rgb(board.calculate_board()))
 
     if args.matplotlib:
+        plt.clf()
         plt.imshow(board_to_rgb(board.calculate_board()))
         plt.show()
         plt.pause(0.05)
 
     if args.images:
+        plt.clf()
         plt.imshow(board_to_rgb(board.calculate_board()))
         plt.savefig('images/{:04d}.png'.format(i))
 
