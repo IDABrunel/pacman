@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 from game import Game
 from rgb_mapper import board_to_rgb
 from arduino import ArduinoRGBMatrix
-from moves import UserInput, ValidRandomWithMomentem
+from moves import UserInput, ValidRandomWithMomentem, QLearning
 
 INIT_BOARD_STATE = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -58,7 +58,7 @@ blinky_move_factory = ValidRandomWithMomentem()
 pinky_move_factory = ValidRandomWithMomentem()
 inky_move_factory = ValidRandomWithMomentem()
 clyde_move_factory = ValidRandomWithMomentem()
-pacman_move_factory = UserInput()
+pacman_move_factory = QLearning(board)
 
 if args.arduino:
     arduino_matrix = ArduinoRGBMatrix()
@@ -82,7 +82,7 @@ while board.complete is False:
     print('Tick...' + str(i))
 
     board.handle_moves(
-        pacman_move_factory.generate_move(),
+        pacman_move_factory.generate_move(board.pacman),
         blinky_move_factory.generate_move(board.blinky),
         pinky_move_factory.generate_move(board.pinky),
         inky_move_factory.generate_move(board.inky),
