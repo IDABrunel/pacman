@@ -18,6 +18,14 @@ class Moves:
         return valid_moves[randint(0, len(valid_moves) - 1)]
 
 
+class UserInput:
+    def __init__(self):
+        pass
+
+    def generate_move(self):
+        return input("Direction U/D/L/R: ")
+
+
 class ValidRandomWithMomentem:
     last_move = ''
 
