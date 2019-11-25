@@ -77,30 +77,51 @@ if args.images:
     plt.imshow(board_to_rgb(board.calculate_board()))
     plt.savefig('images/0000.png')
 
-i = 1
-while board.complete is False:
-    print('Tick...' + str(i))
+save= False
+g = 1
+while True:
+    i = 1
 
-    board.handle_moves(
-        pacman_move_factory.generate_move(board.pacman),
-        blinky_move_factory.generate_move(board.blinky),
-        pinky_move_factory.generate_move(board.pinky),
-        inky_move_factory.generate_move(board.inky),
-        clyde_move_factory.generate_move(board.clyde)
+    board = Game(
+        INIT_BOARD_STATE,
+        INIT_PACMAN_LOCATION,
+        INIT_BLINKY_LOCATION,
+        INIT_PINKY_LOCATION,
+        INIT_INKY_LOCATION,
+        INIT_CLYDE_LOCATION
     )
 
-    if args.arduino:
-        arduino_matrix.update(board_to_rgb(board.calculate_board()))
+    pacman_move_factory = QLearning(board)
 
-    if args.matplotlib:
-        plt.clf()
-        plt.imshow(board_to_rgb(board.calculate_board()))
-        plt.show()
-        plt.pause(0.05)
+    if save:
+        pacman_move_factory.q_table = save
 
-    if args.images:
-        plt.clf()
-        plt.imshow(board_to_rgb(board.calculate_board()))
-        plt.savefig('images/{:04d}.png'.format(i))
+    while board.complete is False:
+        print(board.complete)
+        print('Tick...' + str(i) + ' of ' + str(g))
 
-    i = i + 1
+        board.handle_moves(
+            pacman_move_factory.generate_move(board.pacman),
+            blinky_move_factory.generate_move(board.blinky),
+            pinky_move_factory.generate_move(board.pinky),
+            inky_move_factory.generate_move(board.inky),
+            clyde_move_factory.generate_move(board.clyde)
+        )
+
+        if args.arduino:
+            arduino_matrix.update(board_to_rgb(board.calculate_board()))
+
+        if args.matplotlib:
+            plt.clf()
+            plt.imshow(board_to_rgb(board.calculate_board()))
+            plt.show()
+            plt.pause(0.05)
+
+        if args.images:
+            plt.clf()
+            plt.imshow(board_to_rgb(board.calculate_board()))
+            plt.savefig('images/{:04d}.png'.format(i))
+
+        i = i + 1
+
+    save = pacman_move_factory.q_table

@@ -16,6 +16,7 @@ class Game:
         self.inky = Inky(self, inky_location)
         self.clyde = Clyde(self, clyde_location)
         self.pacman = Pacman(self, pacman_location)
+        self.ticks = 0
 
     def handle_moves(self, pacman_move, blinky_move, pinky_move, inky_move, clyde_move):
         self.blinky.handle_move(blinky_move)
@@ -29,6 +30,8 @@ class Game:
 
         if nuggets_left == 0:
             self.complete = True
+
+        self.ticks = self.ticks + 1
 
     def count_nuggets_left(self):
         nuggets = 0
