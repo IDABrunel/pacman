@@ -1,3 +1,4 @@
+
 class Pacman:
     id = 2
     nuggets_collected = 0
@@ -8,6 +9,7 @@ class Pacman:
         self._nuggets_collected = 0
 
     def handle_move(self, move):
+
         proposed_location = self.calculate_move_location(move)
 
         if self.is_valid_location(proposed_location):
@@ -21,21 +23,18 @@ class Pacman:
 
     def calculate_move_location(self, move):
         if move == 'U':
-            return [self._location[0], self._location[1] - 1]
-
-        if move == 'D':
-            return [self._location[0], self._location[1] + 1]
-
-        if move == 'L':
-            return [self._location[0] - 1, self._location[1]]
-
-        if move == 'R':
-            return [self._location[0] + 1, self._location[1]]
-
-        if move == '':
+            return self._game.normalise_coordinates([self._location[0], self._location[1] - 1])
+        elif move == 'D':
+            return self._game.normalise_coordinates([self._location[0], self._location[1] + 1])
+        elif move == 'L':
+            return self._game.normalise_coordinates([self._location[0] - 1, self._location[1]])
+        elif move == 'R':
+            return self._game.normalise_coordinates([self._location[0] + 1, self._location[1]])
+        elif move == '':
             return self._location
 
         raise Exception('Invalid Move Identifier')
 
     def is_valid_location(self, location):
+        location = self._game.normalise_coordinates(location)
         return self._game.state[location[1]][location[0]] in [0, 8]
