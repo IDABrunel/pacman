@@ -1,5 +1,4 @@
 import copy
-
 from agents.blinky import Blinky
 from agents.pinky import Pinky
 from agents.inky import Inky
@@ -15,8 +14,7 @@ class Game:
         if x < 0:
             x = self.get_num_cols() + x
         elif x >= self.get_num_cols():
-            x = x - self.get_num_cols()
-
+           x = x - self.get_num_cols()
         if y < 0:
             y = self.get_num_rows() + y
         elif y >= self.get_num_rows():
@@ -37,6 +35,7 @@ class Game:
         self.inky = Inky(self, inky_location)
         self.clyde = Clyde(self, clyde_location)
         self.pacman = Pacman(self, pacman_location)
+        self.pacman_lives = 3
 
     def handle_moves(self, pacman_move, blinky_move, pinky_move, inky_move, clyde_move):
         self.blinky.handle_move(blinky_move)
@@ -51,6 +50,15 @@ class Game:
         if nuggets_left == 0:
             self.complete = True
 
+        ghost_locations = [self.blinky._location, self.clyde._location, self.inky._location, self.pinky._location]
+
+        if self.pacman._location in ghost_locations:
+            self.pacman_lives = self.pacman_lives - 1
+            print('Lives left', self.pacman_lives)
+
+        if self.pacman_lives == 0:
+            self.complete = True
+
     def count_nuggets_left(self):
         nuggets = 0
 
@@ -60,6 +68,8 @@ class Game:
                     nuggets = nuggets + 1
 
         return nuggets
+
+
 
     def calculate_board(self):
         current_state = copy.deepcopy(self.state)
