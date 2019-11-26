@@ -11,7 +11,7 @@ class Game:
     complete = False
 
     def normalise_coordinates(self, location):
-        x,y = location
+        x, y = location
         if x < 0:
             x = self.get_num_cols() + x
         elif x >= self.get_num_cols():
@@ -22,7 +22,7 @@ class Game:
         elif y >= self.get_num_rows():
             y = y - self.get_num_rows()
 
-        return [x,y]
+        return [x, y]
 
     def get_num_rows(self):
         return len(self.state)
