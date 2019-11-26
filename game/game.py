@@ -10,7 +10,7 @@ class Game:
     complete = False
 
     def __init__(self, board_state, pacman_location, blinky_location, pinky_location, inky_location, clyde_location):
-        self.state = board_state
+        self.state = copy.deepcopy(board_state)
         self.blinky = Blinky(self, blinky_location)
         self.pinky = Pinky(self, pinky_location)
         self.inky = Inky(self, inky_location)
@@ -26,7 +26,7 @@ class Game:
         self.pacman.handle_move(pacman_move)
 
         nuggets_left = self.count_nuggets_left()
-        print('Nuggets left', nuggets_left)
+        # print('Nuggets left', nuggets_left)
 
         if nuggets_left == 0:
             self.complete = True

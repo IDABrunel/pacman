@@ -53,7 +53,7 @@ class ValidRandomWithMomentem:
 
 
 class QLearning:
-    def __init__(self, game, learning_rate=.2, exploration_rate=.1, discount_factor=.8, num_training=10):
+    def __init__(self, game, learning_rate=.2, exploration_rate=.05, discount_factor=.8, num_training=10):
         self.game = game
         self.lr = learning_rate
         self.er = exploration_rate
@@ -75,15 +75,19 @@ class QLearning:
         agent_location = agent._location
 
         left = board[agent_location[1]][agent_location[0] - 1]
+        leftleft = board[agent_location[1]][agent_location[0] - 2] if agent_location[0] - 2 in board[agent_location[1]] else 1
         right = board[agent_location[1]][agent_location[0] + 1]
+        rightright = board[agent_location[1]][agent_location[0] + 2] if agent_location[0] + 2 in board[agent_location[1]] else 1
         up = board[agent_location[1] + 1][agent_location[0]]
-        down = board[agent_location[1] - 1][agent_location[0]]
+        upup = board[agent_location[1] + 2][agent_location[0]] if agent_location[1] + 2 in board else 1
+        down = board[agent_location[1] - 2][agent_location[0]]
+        downdown = board[agent_location[1] - 2][agent_location[0]] if agent_location[1] - 2 in board else 1
 
-        return (left, right, up, down)
+        return (left, leftleft, right, rightright, up, upup, down, downdown)
 
     def get_q_value(self, state, action):
         if (state, action) in self.q_table:
-            print('LOOKUP', self.q_table[(state, action)])
+            # print('LOOKUP', self.q_table[(state, action)])
             return self.q_table[(state, action)]
         else:
             return 0
@@ -106,48 +110,57 @@ class QLearning:
 
 
     def generate_move(self, agent):
-        valid_moves = calculate_valid_moves(agent)
-        valid_moves.remove('')
+        current_valid_moves = calculate_valid_moves(agent)
+        current_valid_moves.remove('')
 
         if len(self.last_states) > 1:
             last_state = tuple(self.last_states[-2:])
             last_valid_actions = tuple(self.last_valid_actions[-2:])
-            print(last_valid_actions)
+            # print(last_valid_actions)
             last_action = tuple(self.last_actions[-2:])
             reward = agent._nuggets_collected - self.score
             self.score = agent._nuggets_collected
+
+            if self.game.pinky._location == agent._location:
+                reward = reward - 100
+            if self.game.inky._location == agent._location:
+                reward = reward - 100
+            if self.game.blinky._location == agent._location:
+                reward = reward - 100
+            if self.game.clyde._location == agent._location:
+                reward = reward - 100
             # reward = reward + 1
             # if reward  == 0:
             #     reward = -self.game.ticks
-            print(reward)
+            # print(reward)
             self.update_q(last_state, last_action, reward, self.max_q(last_state, last_valid_actions))
             # self.set_q_value(last_state, last_action, reward)
 
 
         if random() < self.er or len(self.last_states) < 2:
-            print('radnd')
-            valid_move = self.primative.generate_move(agent)
+            # print('radnd')
+            valid_move = Moves.valid_random(agent)
         else:
             valid_move_q_values = []
 
-            for valid_move in valid_moves:
-                print(self.get_feature_state(agent), valid_move)
+            for valid_move in current_valid_moves:
+                # print(self.get_feature_state(agent), valid_move)
                 valid_move_q_values.append(self.get_q_value(tuple([self.last_states[-1], self.get_feature_state(agent)]), tuple([self.last_actions[-1], valid_move])))
                 # print(valid_move_q_values)
 
             if max(valid_move_q_values) == 0:
-                print('nonplan rand')
-                valid_move = Moves.valid_random(agent)
+                # print('nonplan rand')
+                valid_move = self.primative.generate_move(agent)
             else:
-                print('plan')
-                valid_move = valid_moves[valid_move_q_values.index(max(valid_move_q_values))]
+                # print('plan')
+                valid_move = current_valid_moves[valid_move_q_values.index(max(valid_move_q_values))]
 
 
             
-        print(valid_move)
+        # print(valid_move)
         self.last_states.append(self.get_feature_state(agent))
         self.last_actions.append(valid_move)
-        self.last_valid_actions.append(tuple(valid_moves))
+        self.last_valid_actions.append(tuple(current_valid_moves))
 
         return valid_move
         
