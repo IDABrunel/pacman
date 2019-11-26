@@ -28,12 +28,6 @@ INIT_CLYDE_LOCATION = [26, 7]
 
 INIT_PACMAN_LOCATION = [26, 10]
 
-
-# print('Length of board', getNumCol())
-# print('Width of board', getNumRow())
-# print('Length of board', boardLength)
-# print('Width of board', boardWidth)
-
 board = Game(
     INIT_BOARD_STATE,
     INIT_PACMAN_LOCATION,
