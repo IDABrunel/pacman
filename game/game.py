@@ -1,4 +1,5 @@
 import copy
+
 from agents.blinky import Blinky
 from agents.pinky import Pinky
 from agents.inky import Inky
@@ -8,6 +9,26 @@ from agents.pacman import Pacman
 
 class Game:
     complete = False
+
+    def normalise_coordinates(self, location):
+        x,y = location
+        if x < 0:
+            x = self.get_num_cols() + x
+        elif x >= self.get_num_cols():
+            x = x - self.get_num_cols()
+
+        if y < 0:
+            y = self.get_num_rows() + y
+        elif y >= self.get_num_rows():
+            y = y - self.get_num_rows()
+
+        return [x,y]
+
+    def get_num_rows(self):
+        return len(self.state)
+
+    def get_num_cols(self):
+        return len(self.state[0])
 
     def __init__(self, board_state, pacman_location, blinky_location, pinky_location, inky_location, clyde_location):
         self.state = board_state
