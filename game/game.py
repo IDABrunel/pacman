@@ -69,8 +69,6 @@ class Game:
 
         return nuggets
 
-
-
     def calculate_board(self):
         current_state = copy.deepcopy(self.state)
         current_state[self.blinky._location[1]][self.blinky._location[0]] = self.blinky.id
