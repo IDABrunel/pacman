@@ -5,14 +5,15 @@ class Pacman:
 
     def __init__(self, game, spawnLocation):
         self._game = game
+        self._last_location = spawnLocation
         self._location = spawnLocation
         self._nuggets_collected = 0
 
     def handle_move(self, move):
-
         proposed_location = self.calculate_move_location(move)
 
         if self.is_valid_location(proposed_location):
+            self._last_location = self._location
             self._location = proposed_location
 
         if self._game.state[self._location[1]][self._location[0]] == 8:

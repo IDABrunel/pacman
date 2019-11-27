@@ -3,12 +3,14 @@ class Inky:
 
     def __init__(self, game, spawnLocation):
         self._game = game
+        self._last_location = spawnLocation
         self._location = spawnLocation
 
     def handle_move(self, move):
         proposed_location = self.calculate_move_location(move)
 
         if self.is_valid_location(proposed_location):
+            self._last_location = proposed_location
             self._location = proposed_location
 
         return self._location

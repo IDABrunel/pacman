@@ -3,6 +3,7 @@ class Clyde:
 
     def __init__(self, game, spawnLocation):
         self._game = game
+        self._last_location = spawnLocation
         self._location = spawnLocation
 
     def handle_move(self, move):

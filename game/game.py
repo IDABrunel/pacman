@@ -10,7 +10,8 @@ class Game:
     complete = False
 
     def normalise_coordinates(self, location):
-        x, y = location
+        x, y = locations
+
         if x < 0:
             x = self.get_num_cols() + x
         elif x >= self.get_num_cols():
@@ -50,9 +51,14 @@ class Game:
         if nuggets_left == 0:
             self.complete = True
 
-        ghost_locations = [self.blinky._location, self.clyde._location, self.inky._location, self.pinky._location]
+        ghost_last_location = [self.blinky._last_location, self.clyde._last_location, self.inky._last_location, self.pinky._last_location]
+        ghost_location = [self.blinky._location, self.clyde._location, self.inky._location, self.pinky._location]
 
-        if self.pacman._location in ghost_locations:
+        if self.pacman._last_location in ghost_last_location:
+            self.pacman_lives = self.pacman_lives - 1
+            print('Lives left', self.pacman_lives)
+
+        if self.pacman._location in ghost_location:
             self.pacman_lives = self.pacman_lives - 1
             print('Lives left', self.pacman_lives)
 
