@@ -16,13 +16,17 @@ class Clyde:
 
     def calculate_move_location(self, move):
         if move == 'U':
-            return self._game.normalise_coordinates([self._current_location[0], self._current_location[1] - 1])
+            return self._game.normalise_coordinates(
+                [self._current_location[0], self._current_location[1] - 1])
         elif move == 'D':
-            return self._game.normalise_coordinates([self._current_location[0], self._current_location[1] + 1])
+            return self._game.normalise_coordinates(
+                [self._current_location[0], self._current_location[1] + 1])
         elif move == 'L':
-            return self._game.normalise_coordinates([self._current_location[0] - 1, self._current_location[1]])
+            return self._game.normalise_coordinates(
+                [self._current_location[0] - 1, self._current_location[1]])
         elif move == 'R':
-            return self._game.normalise_coordinates([self._current_location[0] + 1, self._current_location[1]])
+            return self._game.normalise_coordinates(
+                [self._current_location[0] + 1, self._current_location[1]])
         elif move == '':
             return self._current_location
 
