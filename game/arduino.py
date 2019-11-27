@@ -141,9 +141,9 @@ class ArduinoRGBMatrix:
         for y, row in enumerate(new_state):
             for x, pixel in enumerate(row):
                 if (
-                    pixel[0] != self.current_state[y][x][0]
-                    or pixel[1] != self.current_state[y][x][1]
-                    or pixel[2] != self.current_state[y][x][2]
+                    pixel[0] != self.current_state[y][x][0] or
+                    pixel[1] != self.current_state[y][x][1] or
+                    pixel[2] != self.current_state[y][x][2]
                 ):
                     pixel_changes.append([[x, y], pixel])
 

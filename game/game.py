@@ -103,19 +103,10 @@ class Game:
 
     def calculate_board(self):
         current_state = copy.deepcopy(self.state)
-        current_state[
-            self.blinky._current_location[1]]
-        [self.blinky._current_location[0]] = self.blinky.id
-        current_state[
-            self.pinky._current_location[1]]
-        [self.pinky._current_location[0]] = self.pinky.id
-        current_state[
-            self.inky._current_location[1]]
-        [self.inky._current_location[0]] = self.inky.id
-        current_state[
-            self.clyde._current_location[1]]
-        [self.clyde._current_location[0]] = self.clyde.id
-        current_state[
-            self.pacman._current_location[1]]
-        [self.pacman._current_location[0]] = self.pacman.id
+        current_state[self.blinky._current_location[1]][self.blinky._current_location[0]] = self.blinky.id
+        current_state[self.pinky._current_location[1]][self.pinky._current_location[0]] = self.pinky.id
+        current_state[self.inky._current_location[1]][self.inky._current_location[0]] = self.inky.id
+        current_state[self.clyde._current_location[1]][self.clyde._current_location[0]] = self.clyde.id
+        current_state[self.pacman._current_location[1]][self.pacman._current_location[0]] = self.pacman.id
+
         return current_state
