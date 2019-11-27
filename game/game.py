@@ -1,10 +1,10 @@
 import copy
+
 from agents.blinky import Blinky
 from agents.pinky import Pinky
 from agents.inky import Inky
 from agents.clyde import Clyde
 from agents.pacman import Pacman
-
 
 class Game:
     complete = False
@@ -15,7 +15,7 @@ class Game:
         if x < 0:
             x = self.get_num_cols() + x
         elif x >= self.get_num_cols():
-           x = x - self.get_num_cols()
+            x = x - self.get_num_cols()
         if y < 0:
             y = self.get_num_rows() + y
         elif y >= self.get_num_rows():

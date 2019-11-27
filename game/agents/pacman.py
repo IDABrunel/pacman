@@ -1,4 +1,3 @@
-
 class Pacman:
     id = 2
     nuggets_collected = 0
