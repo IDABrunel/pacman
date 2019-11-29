@@ -5,7 +5,7 @@ from arduino import ArduinoRGBMatrix
 import numpy as np
 
 
-class ScrollingText:
+class TextWriter:
     def __init__(self, text, width, height):
         self.image_width = width
         self.image_height = height
@@ -24,7 +24,7 @@ class ScrollingText:
         img = Image.new('RGB', (self.image_width, self.image_height), color=(0, 0, 0))
         d = ImageDraw.Draw(img)
 
-        d.text((self.text_x, 0), self.text, fill=(100, 100, 0))
+        d.text(((self.image_width - self.text_width) / 2, 0), self.text, fill=(100, 100, 0))
 
         self.text_x = self.text_x - 1
 
@@ -34,9 +34,8 @@ class ScrollingText:
         return img
 
 
-st = ScrollingText(sys.argv[1], 60, 21)
+st = TextWriter(sys.argv[1], 60, 21)
 
 board = ArduinoRGBMatrix()
 
-while True:
-    board.update(np.array(st.generate()))
+board.update(np.array(st.generate()))
