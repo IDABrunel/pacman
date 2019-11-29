@@ -94,7 +94,8 @@ class ArduinoRGBMatrix:
         shuffle(changes_from_current_state)
 
         while(len(changes_from_current_state) > 0):
-            x = n if n < len(changes_from_current_state) else len(changes_from_current_state)
+            x = n if n < len(changes_from_current_state) else len(
+                changes_from_current_state)
             ops = []
 
             for _ in range(0, x):
@@ -102,7 +103,8 @@ class ArduinoRGBMatrix:
                 x, y = location
                 r, g, b = rgb
                 self.current_state[y][x] = rgb
-                ops.append(self.op_set(self.location_to_iloc(location), r, g, b))
+                ops.append(self.op_set(
+                    self.location_to_iloc(location), r, g, b))
 
             ops.append(self.op_show())
 

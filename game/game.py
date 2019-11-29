@@ -12,11 +12,11 @@ class Game:
 
     def normalise_coordinates(self, location):
         x, y = location
+
         if x < 0:
             x = self.get_num_cols() + x
         elif x >= self.get_num_cols():
             x = x - self.get_num_cols()
-
         if y < 0:
             y = self.get_num_rows() + y
         elif y >= self.get_num_rows():
@@ -30,15 +30,31 @@ class Game:
     def get_num_cols(self):
         return len(self.state[0])
 
-    def __init__(self, board_state, pacman_location, blinky_location, pinky_location, inky_location, clyde_location):
+    def __init__(
+        self,
+        board_state,
+        pacman_current_location,
+        blinky_current_location,
+        pinky_current_location,
+        inky_current_location,
+        clyde_current_location
+    ):
         self.state = board_state
-        self.blinky = Blinky(self, blinky_location)
-        self.pinky = Pinky(self, pinky_location)
-        self.inky = Inky(self, inky_location)
-        self.clyde = Clyde(self, clyde_location)
-        self.pacman = Pacman(self, pacman_location)
+        self.blinky = Blinky(self, blinky_current_location)
+        self.pinky = Pinky(self, pinky_current_location)
+        self.inky = Inky(self, inky_current_location)
+        self.clyde = Clyde(self, clyde_current_location)
+        self.pacman = Pacman(self, pacman_current_location)
+        self.pacman_lives = 3
 
-    def handle_moves(self, pacman_move, blinky_move, pinky_move, inky_move, clyde_move):
+    def handle_moves(
+        self,
+        pacman_move,
+        blinky_move,
+        pinky_move,
+        inky_move,
+        clyde_move
+    ):
         self.blinky.handle_move(blinky_move)
         self.pinky.handle_move(pinky_move)
         self.inky.handle_move(inky_move)
@@ -49,6 +65,30 @@ class Game:
         print('Nuggets left', nuggets_left)
 
         if nuggets_left == 0:
+            self.complete = True
+
+        ghost_last_location = [
+            self.blinky._last_location,
+            self.clyde._last_location,
+            self.inky._last_location,
+            self.pinky._last_location
+        ]
+        ghost_current_location = [
+            self.blinky._current_location,
+            self.clyde._current_location,
+            self.inky._current_location,
+            self.pinky._current_location
+        ]
+
+        if self.pacman._last_location in ghost_last_location:
+            self.pacman_lives = self.pacman_lives - 1
+            print('Lives left', self.pacman_lives)
+
+        if self.pacman._current_location in ghost_current_location:
+            self.pacman_lives = self.pacman_lives - 1
+            print('Lives left', self.pacman_lives)
+
+        if self.pacman_lives == 0:
             self.complete = True
 
     def count_nuggets_left(self):
@@ -63,9 +103,10 @@ class Game:
 
     def calculate_board(self):
         current_state = copy.deepcopy(self.state)
-        current_state[self.blinky._location[1]][self.blinky._location[0]] = self.blinky.id
-        current_state[self.pinky._location[1]][self.pinky._location[0]] = self.pinky.id
-        current_state[self.inky._location[1]][self.inky._location[0]] = self.inky.id
-        current_state[self.clyde._location[1]][self.clyde._location[0]] = self.clyde.id
-        current_state[self.pacman._location[1]][self.pacman._location[0]] = self.pacman.id
+        current_state[self.blinky._current_location[1]][self.blinky._current_location[0]] = self.blinky.id
+        current_state[self.pinky._current_location[1]][self.pinky._current_location[0]] = self.pinky.id
+        current_state[self.inky._current_location[1]][self.inky._current_location[0]] = self.inky.id
+        current_state[self.clyde._current_location[1]][self.clyde._current_location[0]] = self.clyde.id
+        current_state[self.pacman._current_location[1]][self.pacman._current_location[0]] = self.pacman.id
+
         return current_state
