@@ -2,9 +2,10 @@ import sys
 import argparse
 from matplotlib import pyplot as plt
 from game import Game
-from rgb_mapper import board_to_rgb
 from arduino import ArduinoRGBMatrix
 from moves import ValidRandomWithMomentem
+from results_display import generate_board_with_stats
+
 
 INIT_BOARD_STATE = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -64,20 +65,20 @@ if args.arduino:
     arduino_matrix = ArduinoRGBMatrix()
     arduino_matrix.clear()
     arduino_matrix.update_by_n_random_pixels(
-        board_to_rgb(board.calculate_board()),
+        generate_board_with_stats(board),
         50
     )
 
 if args.matplotlib:
     plt.ion()
     plt.clf()
-    plt.imshow(board_to_rgb(board.calculate_board()))
+    plt.imshow(generate_board_with_stats(board))
     plt.show()
     plt.pause(0.05)
 
 if args.images:
     plt.clf()
-    plt.imshow(board_to_rgb(board.calculate_board()))
+    plt.imshow(generate_board_with_stats(board))
     plt.savefig('images/0000.png')
 
 i = 1
@@ -93,17 +94,17 @@ while board.complete is False:
     )
 
     if args.arduino:
-        arduino_matrix.update(board_to_rgb(board.calculate_board()))
+        arduino_matrix.update(generate_board_with_stats(board))
 
     if args.matplotlib:
         plt.clf()
-        plt.imshow(board_to_rgb(board.calculate_board()))
+        plt.imshow(generate_board_with_stats(board))
         plt.show()
         plt.pause(0.05)
 
     if args.images:
         plt.clf()
-        plt.imshow(board_to_rgb(board.calculate_board()))
+        plt.imshow(generate_board_with_stats(board))
         plt.savefig('images/{:04d}.png'.format(i))
 
     i = i + 1
