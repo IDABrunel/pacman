@@ -90,7 +90,7 @@ class Game:
             print('Lives left', self.pacman_lives)
             self.reset_agent_positions()
 
-        if self.pacman_lives == 0:
+        if self.pacman_lives <= 0:
             self.complete = True
 
     def reset_agent_positions(self):
