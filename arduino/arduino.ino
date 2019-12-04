@@ -7,7 +7,7 @@
 #define PIN        52 // On Trinket or Gemma, suggest changing this to 1
 
 // How many NeoPixels are attached to the Arduino?
-#define NUMPIXELS 60 * 20 // Popular NeoPixel ring size
+#define NUMPIXELS 60 * 21 // Popular NeoPixel ring size
 
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 

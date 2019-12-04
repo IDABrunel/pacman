@@ -41,15 +41,10 @@ class Game:
     ):
         self.state = board_state
         self.blinky = Blinky(self, blinky_current_location)
-        # self.blinky_start_location = blinky_current_location
         self.pinky = Pinky(self, pinky_current_location)
-        # self.pinky_start_location = pinky_current_location
         self.inky = Inky(self, inky_current_location)
-        # self.inky_start_location = inky_current_location
         self.clyde = Clyde(self, clyde_current_location)
-        # self.clyde_start_location = clyde_current_location
         self.pacman = Pacman(self, pacman_current_location)
-        # self.pacman_start_location = clyde_current_location
         self.pacman_lives = 3
 
     def handle_moves(
