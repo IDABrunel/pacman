@@ -6,6 +6,7 @@ from agents.inky import Inky
 from agents.clyde import Clyde
 from agents.pacman import Pacman
 
+
 class Game:
     complete = False
 
