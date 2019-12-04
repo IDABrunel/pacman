@@ -82,7 +82,7 @@ if args.images:
 
 i = 1
 while board.complete is False:
-    # print('Tick...' + str(i))
+    print('Tick...' + str(i))
 
     board.handle_moves(
         pacman_move_factory.generate_move(board.pacman),

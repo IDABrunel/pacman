@@ -62,7 +62,7 @@ class Game:
         self.pacman.handle_move(pacman_move)
 
         nuggets_left = self.count_nuggets_left()
-        # print('Nuggets left', nuggets_left)
+        print('Nuggets left', nuggets_left)
 
         if nuggets_left == 0:
             self.complete = True
