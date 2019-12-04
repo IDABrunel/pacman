@@ -41,10 +41,15 @@ class Game:
     ):
         self.state = board_state
         self.blinky = Blinky(self, blinky_current_location)
+        # self.blinky_start_location = blinky_current_location
         self.pinky = Pinky(self, pinky_current_location)
+        # self.pinky_start_location = pinky_current_location
         self.inky = Inky(self, inky_current_location)
+        # self.inky_start_location = inky_current_location
         self.clyde = Clyde(self, clyde_current_location)
+        # self.clyde_start_location = clyde_current_location
         self.pacman = Pacman(self, pacman_current_location)
+        # self.pacman_start_location = clyde_current_location
         self.pacman_lives = 3
 
     def handle_moves(
@@ -62,7 +67,7 @@ class Game:
         self.pacman.handle_move(pacman_move)
 
         nuggets_left = self.count_nuggets_left()
-        print('Nuggets left', nuggets_left)
+        # print('Nuggets left', nuggets_left)
 
         if nuggets_left == 0:
             self.complete = True
@@ -83,13 +88,22 @@ class Game:
         if self.pacman._last_location in ghost_last_location:
             self.pacman_lives = self.pacman_lives - 1
             print('Lives left', self.pacman_lives)
+            self.reset_agent_positions()
 
         if self.pacman._current_location in ghost_current_location:
             self.pacman_lives = self.pacman_lives - 1
             print('Lives left', self.pacman_lives)
+            self.reset_agent_positions()
 
         if self.pacman_lives == 0:
             self.complete = True
+
+    def reset_agent_positions(self):
+        self.blinky._current_location = self.blinky._spawn_location
+        self.clyde._current_location = self.clyde._spawn_location
+        self.inky._current_location = self.inky._spawn_location
+        self.pinky._current_location = self.pinky._spawn_location
+        self.pacman._current_location = self.pacman._spawn_location
 
     def count_nuggets_left(self):
         nuggets = 0

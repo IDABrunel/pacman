@@ -3,6 +3,7 @@ class Pinky:
 
     def __init__(self, game, spawnLocation):
         self._game = game
+        self._spawn_location = spawnLocation
         self._last_location = spawnLocation
         self._current_location = spawnLocation
 
