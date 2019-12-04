@@ -83,13 +83,22 @@ class Game:
         if self.pacman._last_location in ghost_last_location:
             self.pacman_lives = self.pacman_lives - 1
             print('Lives left', self.pacman_lives)
+            self.reset_agent_positions()
 
         if self.pacman._current_location in ghost_current_location:
             self.pacman_lives = self.pacman_lives - 1
             print('Lives left', self.pacman_lives)
+            self.reset_agent_positions()
 
         if self.pacman_lives == 0:
             self.complete = True
+
+    def reset_agent_positions(self):
+        self.blinky._current_location = self.blinky._spawn_location
+        self.clyde._current_location = self.clyde._spawn_location
+        self.inky._current_location = self.inky._spawn_location
+        self.pinky._current_location = self.pinky._spawn_location
+        self.pacman._current_location = self.pacman._spawn_location
 
     def count_nuggets_left(self):
         nuggets = 0

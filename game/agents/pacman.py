@@ -4,6 +4,7 @@ class Pacman:
 
     def __init__(self, game, spawnLocation):
         self._game = game
+        self._spawn_location = spawnLocation
         self._last_location = spawnLocation
         self._current_location = spawnLocation
         self._nuggets_collected = 0
