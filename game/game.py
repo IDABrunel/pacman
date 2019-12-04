@@ -88,7 +88,7 @@ class Game:
             self.pacman_lives = self.pacman_lives - 1
             print('Lives left', self.pacman_lives)
 
-        if self.pacman_lives == 0:
+        if self.pacman_lives <= 0:
             self.complete = True
 
     def count_nuggets_left(self):
