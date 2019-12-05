@@ -6,6 +6,7 @@ class Clyde:
         self._spawn_location = spawnLocation
         self._last_location = spawnLocation
         self._current_location = spawnLocation
+        self._is_ghost_mode = False
 
     def handle_move(self, move):
         proposed_location = self.calculate_move_location(move)
@@ -36,4 +37,7 @@ class Clyde:
 
     def is_valid_location(self, location):
         location = self._game.normalise_coordinates(location)
+        #need to add a one way thing so they can only leave the U pen
+        if self._is_ghost_mode = False
+            return self._game.state[location[1]][location[0]] in [0, 7, 8]
         return self._game.state[location[1]][location[0]] in [0, 8]
