@@ -63,6 +63,7 @@ class Game:
 
         nuggets_left = self.count_nuggets_left()
         print('Nuggets left', nuggets_left)
+        print ('Score:', self.calc_score())
 
         if nuggets_left == 0:
             self.complete = True
@@ -109,6 +110,9 @@ class Game:
                     nuggets = nuggets + 1
 
         return nuggets
+
+    def calc_score(self):
+        return ((176 - self.count_nuggets_left()) * 5)
 
     def calculate_board(self):
         current_state = copy.deepcopy(self.state)
