@@ -112,7 +112,10 @@ class Game:
         return nuggets
 
     def calc_score(self):
-        return ((176 - self.count_nuggets_left()) * 5)
+        nuggets_score = ((176 - self.count_nuggets_left()) * 5)
+        fruit_score = ((self.pacman._fruit_collected) * 100)
+
+        return nuggets_score + fruit_score
 
     def calculate_board(self):
         current_state = copy.deepcopy(self.state)
