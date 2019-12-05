@@ -7,7 +7,7 @@ class Clyde:
         self._last_location = spawnLocation
         self._current_location = spawnLocation
         self._is_ghost_mode = False
-        
+
     def handle_move(self, move):
         proposed_location = self.calculate_move_location(move)
 

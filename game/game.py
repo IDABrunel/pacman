@@ -119,7 +119,7 @@ class Game:
         return nuggets
 
     def count_ghost_killing_nuggets_left(self):
-        #reduce to 4 and remove 1 nugget from board when merging to master - only to speed up debug
+        # reduce to 4 and remove 1 nugget from board when merging to master - only to speed up debug
         ghost_killing_nuggets = 5
 
         for y in self.state:
