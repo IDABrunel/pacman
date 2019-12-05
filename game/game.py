@@ -39,7 +39,7 @@ class Game:
         inky_current_location,
         clyde_current_location
     ):
-        self.state = board_state
+        self.state = copy.deepcopy(board_state)
         self.blinky = Blinky(self, blinky_current_location)
         self.pinky = Pinky(self, pinky_current_location)
         self.inky = Inky(self, inky_current_location)

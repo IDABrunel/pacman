@@ -21,6 +21,8 @@ def generate_stats(board):
 
     d = ImageDraw.Draw(img)
 
-    d.text((60 - d.textsize(str(board.count_nuggets_left()))[0], -1), str(board.count_nuggets_left()), fill=(100, 100, 0))
+    score = (176 - board.count_nuggets_left())
+
+    d.text((60 - d.textsize(str(score))[0], -1), str(score), fill=(100, 100, 0))
 
     return img
