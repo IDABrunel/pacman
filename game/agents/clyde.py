@@ -14,6 +14,11 @@ class Clyde:
             self._last_location = proposed_location
             self._current_location = proposed_location
 
+        if self._game.state[
+                self._current_location[1]][self._current_location[0]] == 0 and self._game.count_nuggets_left() == 110:
+            self._game.state[
+                self._current_location[1]][self._current_location[0]] = 10
+
         return self._current_location
 
     def calculate_move_location(self, move):
