@@ -63,7 +63,7 @@ class Game:
 
         nuggets_left = self.count_nuggets_left()
         print('Nuggets left', nuggets_left)
-        print ('Score:', self.calc_score())
+        print('Score:', self.calc_score())
 
         if nuggets_left == 0:
             self.complete = True
