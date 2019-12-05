@@ -9,6 +9,7 @@ from agents.pacman import Pacman
 
 class Game:
     complete = False
+    ghost_mode = False
 
     def normalise_coordinates(self, location):
         x, y = location
@@ -68,10 +69,7 @@ class Game:
             self.complete = True
 
         print('Ghost Killing Nuggets Remaining', self.pacman._ghost_killing_nuggets_collected)
-        print('blinky ghost status', self.blinky._is_ghost_mode)
-        print('clyde ghost status', self.clyde._is_ghost_mode)
-        print('inky ghost status', self.inky._is_ghost_mode)
-        print('pinky ghost status', self.pinky._is_ghost_mode)
+        print('game ghost status', self.ghost_mode)
 
         ghost_last_location = [
             self.blinky._last_location,
@@ -86,29 +84,29 @@ class Game:
             self.pinky._current_location
         ]
 
-        if self.pacman._last_location in ghost_last_location:
+        if self.pacman._last_location in ghost_last_location and not self.ghost_mode:
             self.pacman_lives = self.pacman_lives - 1
             print('Lives left', self.pacman_lives)
             self.reset_agent_positions()
 
-        if self.pacman._current_location in ghost_current_location:
+        if self.pacman._current_location in ghost_current_location and not self.ghost_mode:
             self.pacman_lives = self.pacman_lives - 1
             print('Lives left', self.pacman_lives)
             self.reset_agent_positions()
 
-        if self.pacman._current_location == self.blinky_current_location or self.pacman._last_location == self.blinky._last_location and self.blinky._is_ghost_mode:
+        if self.pacman._current_location == self.blinky._current_location or self.pacman._last_location == self.blinky._last_location and self.ghost_mode:
             self.blinky._current_location = self.blinky._spawn_location
             self.blinky._been_through_gate = False
 
-        if self.pacman._current_location == self.clyde_current_location or self.pacman._last_location == self.clyde._last_location and self.clyde._is_ghost_mode:
+        if self.pacman._current_location == self.clyde._current_location or self.pacman._last_location == self.clyde._last_location and self.ghost_mode:
             self.clyde._current_location = self.clyde._spawn_location
             self.clyde._been_through_gate = False
 
-        if self.pacman._current_location == self.inky_current_location or self.pacman._last_location == self.inky._last_location and self.inky._is_ghost_mode:
+        if self.pacman._current_location == self.inky._current_location or self.pacman._last_location == self.inky._last_location and self.inky.ghost_mode:
             self.inky._current_location = self.inky._spawn_location
             self.inky._been_through_gate = False
 
-        if self.pacman._current_location == self.pinky_current_location or self.pacman._last_location == self.pinky._last_location and self.pinky._is_ghost_mode:
+        if self.pacman._current_location == self.pinky._current_location or self.pacman._last_location == self.pinky._last_location and self.pinky.ghost_mode:
             self.pinky._current_location = self.pinky._spawn_location
             self.pinky._been_through_gate = False
 
@@ -133,16 +131,10 @@ class Game:
         return nuggets
 
     def enable_ghost_mode(self):
-        self.blinky._is_ghost_mode = True
-        self.clyde._is_ghost_mode = True
-        self.inky._is_ghost_mode = True
-        self.pinky._is_ghost_mode = True
+        self.ghost_mode = True
 
     def disable_ghost_mode(self):
-        self.blinky._is_ghost_mode = False
-        self.clyde._is_ghost_mode = False
-        self.inky._is_ghost_mode = False
-        self.pinky._is_ghost_mode = False
+        self.ghost_mode = False
 
     def calculate_board(self):
         current_state = copy.deepcopy(self.state)
