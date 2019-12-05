@@ -1,4 +1,5 @@
 import copy
+import time
 
 from agents.blinky import Blinky
 from agents.pinky import Pinky
@@ -67,6 +68,13 @@ class Game:
         if nuggets_left == 0:
             self.complete = True
 
+        ghost_killing_nuggets_left = self.count_ghost_killing_nuggets_left()
+        print('Ghost Killing Nuggets Remaining', ghost_killing_nuggets_left)
+        print('blinky ghost status', self.blinky._is_ghost_mode)
+        print('clyde ghost status', self.clyde._is_ghost_mode)
+        print('inky ghost status', self.inky._is_ghost_mode)
+        print('pinky ghost status', self.pinky._is_ghost_mode)
+
         ghost_last_location = [
             self.blinky._last_location,
             self.clyde._last_location,
@@ -109,6 +117,31 @@ class Game:
                     nuggets = nuggets + 1
 
         return nuggets
+
+    def count_ghost_killing_nuggets_left(self):
+        #reduce to 4 and remove 1 nugget from board when merging to master - only to speed up debug
+        ghost_killing_nuggets = 5
+
+        for y in self.state:
+            for x in y:
+                if x == 9:
+                    self.enable_ghost_mode()
+                    ghost_killing_nuggets = ghost_killing_nuggets - 1
+
+        return ghost_killing_nuggets
+
+    def enable_ghost_mode(self):
+        t_end = time.time() + 0.1
+        while time.time() < t_end:
+            self.blinky._is_ghost_mode = True
+            self.clyde._is_ghost_mode = True
+            self.inky._is_ghost_mode = True
+            self.pinky._is_ghost_mode = True
+
+        self.blinky._is_ghost_mode = False
+        self.clyde._is_ghost_mode = False
+        self.inky._is_ghost_mode = False
+        self.pinky._is_ghost_mode = False
 
     def calculate_board(self):
         current_state = copy.deepcopy(self.state)
