@@ -67,13 +67,13 @@ class Game:
         if nuggets_left == 0:
             self.complete = True
 
-        if self.blinky._current_location == [26,3]:
+        if self.blinky._current_location == [26, 3]:
             self.blinky._been_through_gate = True
-        elif self.clyde._current_location == [26,3]:
+        elif self.clyde._current_location == [26, 3]:
             self.clyde._been_through_gate = True
-        elif self.inky._current_location == [26,3]:
+        elif self.inky._current_location == [26, 3]:
             self.inky._been_through_gate = True
-        elif self.pinky._current_location == [26,3]:
+        elif self.pinky._current_location == [26, 3]:
             self.pinky._been_through_gate = True
 
         ghost_last_location = [
