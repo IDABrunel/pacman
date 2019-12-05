@@ -97,19 +97,19 @@ class Game:
             self.reset_agent_positions()
 
         if self.pacman._current_location == self.blinky_current_location or self.pacman._last_location == self.blinky._last_location and self.blinky._is_ghost_mode:
-            self.blinky._current_location = self.blinky._spawn_location#
+            self.blinky._current_location = self.blinky._spawn_location
             self.blinky._been_through_gate = False
 
         if self.pacman._current_location == self.clyde_current_location or self.pacman._last_location == self.clyde._last_location and self.clyde._is_ghost_mode:
-            self.clyde._current_location = self.clyde._spawn_location#
+            self.clyde._current_location = self.clyde._spawn_location
             self.clyde._been_through_gate = False
 
         if self.pacman._current_location == self.inky_current_location or self.pacman._last_location == self.inky._last_location and self.inky._is_ghost_mode:
-            self.inky._current_location = self.inky._spawn_location#
+            self.inky._current_location = self.inky._spawn_location
             self.inky._been_through_gate = False
 
         if self.pacman._current_location == self.pinky_current_location or self.pacman._last_location == self.pinky._last_location and self.pinky._is_ghost_mode:
-            self.pinky._current_location = self.pinky._spawn_location#
+            self.pinky._current_location = self.pinky._spawn_location
             self.pinky._been_through_gate = False
 
         if self.pacman_lives <= 0:
