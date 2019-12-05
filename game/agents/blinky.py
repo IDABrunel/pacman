@@ -7,6 +7,7 @@ class Blinky:
         self._last_location = spawnLocation
         self._current_location = spawnLocation
         self._is_ghost_mode = False
+        self._been_through_gate = False
 
     def handle_move(self, move):
         proposed_location = self.calculate_move_location(move)
@@ -37,7 +38,6 @@ class Blinky:
 
     def is_valid_location(self, location):
         location = self._game.normalise_coordinates(location)
-        # need to add a one way thing so they can only leave the U pen
-        if not self._is_ghost_mode:
+        if not self._is_ghost_mode and not self._been_through_gate:
             return self._game.state[location[1]][location[0]] in [0, 7, 8]
         return self._game.state[location[1]][location[0]] in [0, 8]
