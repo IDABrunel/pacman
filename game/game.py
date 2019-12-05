@@ -1,5 +1,4 @@
 import copy
-import time
 
 from agents.blinky import Blinky
 from agents.pinky import Pinky
