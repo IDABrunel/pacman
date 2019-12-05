@@ -64,6 +64,13 @@ class Game:
         nuggets_left = self.count_nuggets_left()
         print('Nuggets left', nuggets_left)
 
+        print('Fruit eaten', self.pacman._fruit_collected)
+
+        if nuggets_left <= 165 and board.current_state[26, 10] == 0:
+            board.current_state[26, 10] = 10
+        if nuggets_left <= 85 and board.current_state[26, 1] == 0:
+            board.current_state[26, 1] = 10
+
         if nuggets_left == 0:
             self.complete = True
 

@@ -36,4 +36,4 @@ class Pinky:
 
     def is_valid_location(self, location):
         location = self._game.normalise_coordinates(location)
-        return self._game.state[location[1]][location[0]] in [0, 8]
+        return self._game.state[location[1]][location[0]] in [0, 8, 10]
