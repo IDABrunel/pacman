@@ -10,6 +10,10 @@ from agents.pacman import Pacman
 class Game:
     complete = False
     ghost_mode = False
+    _num_time_blinky_caught = 0
+    _num_time_clyde_caught = 0
+    _num_time_inky_caught = 0
+    _num_time_pinky_caught = 0
 
     def normalise_coordinates(self, location):
         x, y = location
@@ -70,6 +74,10 @@ class Game:
 
         print('Ghost Killing Nuggets Remaining', self.pacman._ghost_killing_nuggets_collected)
         print('game ghost status', self.ghost_mode)
+        print('blinky has been captured', self._num_time_blinky_caught, 'times')
+        print('clyde has been captured', self._num_time_clyde_caught, 'times')
+        print('inky has been captured', self._num_time_inky_caught, 'times')
+        print('pinky has been captured', self._num_time_pinky_caught, 'times')
 
         ghost_last_location = [
             self.blinky._last_location,
@@ -97,18 +105,22 @@ class Game:
         if self.pacman._current_location == self.blinky._current_location or self.pacman._last_location == self.blinky._last_location and self.ghost_mode:
             self.blinky._current_location = self.blinky._spawn_location
             self.blinky._been_through_gate = False
+            self._num_time_blinky_caught = self._num_time_blinky_caught + 1
 
         if self.pacman._current_location == self.clyde._current_location or self.pacman._last_location == self.clyde._last_location and self.ghost_mode:
             self.clyde._current_location = self.clyde._spawn_location
             self.clyde._been_through_gate = False
+            self._num_time_clyde_caught = self._num_time_clyde_caught + 1
 
         if self.pacman._current_location == self.inky._current_location or self.pacman._last_location == self.inky._last_location and self.inky.ghost_mode:
             self.inky._current_location = self.inky._spawn_location
             self.inky._been_through_gate = False
+            self._num_time_inky_caught = self._num_time_inky_caught + 1
 
         if self.pacman._current_location == self.pinky._current_location or self.pacman._last_location == self.pinky._last_location and self.pinky.ghost_mode:
             self.pinky._current_location = self.pinky._spawn_location
             self.pinky._been_through_gate = False
+            self._num_time_pinky_caught = self._num_time_pinky_caught + 1
 
         if self.pacman_lives <= 0:
             self.complete = True
