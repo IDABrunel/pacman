@@ -133,10 +133,7 @@ class Game:
 
             if self._current_tick == self._ghost_caught_at_tick + 60:
                 self.disable_ghost_mode()
-                self.blinky.id = 3
-                self.pinky.id = 4
-                self.inky.id = 5
-                self.clyde.id = 6
+                self.set_ghosts_to_default_id()
             else:
                 if self._current_tick > self._ghost_caught_at_tick + 30:
                     if self._current_tick % 2 == 0:
@@ -146,17 +143,8 @@ class Game:
                 else:
                     self.change_all_ghost_id(11)
         else:
-            self.blinky.id = 3
-            self.pinky.id = 4
-            self.inky.id = 5
-            self.clyde.id = 6
-            if self.pacman._current_location in ghost_current_location:
-                self.pacman_lives = self.pacman_lives - 1
-                print('Lives left', self.pacman_lives)
-                if self.pacman_lives <= 0:
-                    self.complete = True
-                self.reset_agent_positions()
-            if self.pacman._last_location in ghost_last_location:
+            self.set_ghosts_to_default_id()
+            if self.pacman._current_location in ghost_current_location or self.pacman._last_location in ghost_last_location:
                 self.pacman_lives = self.pacman_lives - 1
                 print('Lives left', self.pacman_lives)
                 if self.pacman_lives <= 0:
@@ -216,6 +204,12 @@ class Game:
         self.pinky.id = new_id
         self.inky.id = new_id
         self.clyde.id = new_id
+
+    def set_ghosts_to_default_id(self):
+        self.blinky.id = 3
+        self.pinky.id = 4
+        self.inky.id = 5
+        self.clyde.id = 6
 
     def get_current_tick(self, tick):
         return tick
