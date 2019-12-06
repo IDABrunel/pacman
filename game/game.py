@@ -9,6 +9,7 @@ from agents.pacman import Pacman
 
 class Game:
     complete = False
+    _is_ghost_mode = False
 
     def normalise_coordinates(self, location):
         x, y = location
@@ -68,10 +69,7 @@ class Game:
             self.complete = True
 
         print('Ghost Killing Nuggets Remaining', self.pacman._ghost_killing_nuggets_collected)
-        print('blinky ghost status', self.blinky._is_ghost_mode)
-        print('clyde ghost status', self.clyde._is_ghost_mode)
-        print('inky ghost status', self.inky._is_ghost_mode)
-        print('pinky ghost status', self.pinky._is_ghost_mode)
+        print('ghost mode status', self._is_ghost_mode)
 
         ghost_last_location = [
             self.blinky._last_location,
@@ -117,16 +115,10 @@ class Game:
         return nuggets
 
     def enable_ghost_mode(self):
-        self.blinky._is_ghost_mode = True
-        self.clyde._is_ghost_mode = True
-        self.inky._is_ghost_mode = True
-        self.pinky._is_ghost_mode = True
+        self._is_ghost_mode = True
 
     def disable_ghost_mode(self):
-        self.blinky._is_ghost_mode = False
-        self.clyde._is_ghost_mode = False
-        self.inky._is_ghost_mode = False
-        self.pinky._is_ghost_mode = False
+        self._is_ghost_mode = False
 
     def calculate_board(self):
         current_state = copy.deepcopy(self.state)
