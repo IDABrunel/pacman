@@ -67,16 +67,9 @@ class Game:
         self.pacman.handle_move(pacman_move)
 
         nuggets_left = self.count_nuggets_left()
-        print('Nuggets left', nuggets_left)
-        print('Score:', self.calc_score())
-
-        print('Fruit eaten', self.pacman._fruit_collected)
 
         if nuggets_left == 0:
             self.complete = True
-
-        print('Ghost Killing Nuggets Remaining', self.pacman._ghost_killing_nuggets_collected)
-        print('ghost mode status', self._is_ghost_mode)
 
         if self.blinky._current_location == [26, 2]:
             self.blinky._been_through_gate = True
@@ -102,12 +95,10 @@ class Game:
 
         if self.pacman._last_location in ghost_last_location:
             self.pacman_lives = self.pacman_lives - 1
-            print('Lives left', self.pacman_lives)
             self.reset_agent_positions()
 
         if self.pacman._current_location in ghost_current_location:
             self.pacman_lives = self.pacman_lives - 1
-            print('Lives left', self.pacman_lives)
             self.reset_agent_positions()
 
         if self.pacman_lives <= 0:
