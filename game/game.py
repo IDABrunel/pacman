@@ -108,36 +108,47 @@ class Game:
             self.pinky._current_location
         ]
 
-        if self.pacman._last_location in ghost_last_location or self.pacman._current_location in ghost_current_location and not self._is_ghost_mode:
-            self.pacman_lives = self.pacman_lives - 1
-            print('Lives left', self.pacman_lives)
-            self.reset_agent_positions()
+        if self._is_ghost_mode:
+            if self.pacman._current_location == self.blinky._current_location or self.pacman._last_location == self.blinky._last_location:
+                self.blinky._current_location = self.blinky._spawn_location
+                self.blinky._been_through_gate = False
+                self._num_time_blinky_caught = self._num_time_blinky_caught + 1
 
-        if self.pacman._current_location == self.blinky._current_location or self.pacman._last_location == self.blinky._last_location and self._is_ghost_mode:
-            self.blinky._current_location = self.blinky._spawn_location
-            self.blinky._been_through_gate = False
-            self._num_time_blinky_caught = self._num_time_blinky_caught + 1
+            elif self.pacman._current_location == self.clyde._current_location or self.pacman._last_location == self.clyde._last_location:
+                self.clyde._current_location = self.clyde._spawn_location
+                self.clyde._been_through_gate = False
+                self._num_time_clyde_caught = self._num_time_clyde_caught + 1
 
-        if self.pacman._current_location == self.clyde._current_location or self.pacman._last_location == self.clyde._last_location and self._is_ghost_mode:
-            self.clyde._current_location = self.clyde._spawn_location
-            self.clyde._been_through_gate = False
-            self._num_time_clyde_caught = self._num_time_clyde_caught + 1
+            elif self.pacman._current_location == self.inky._current_location or self.pacman._last_location == self.inky._last_location:
+                self.inky._current_location = self.inky._spawn_location
+                self.inky._been_through_gate = False
+                self._num_time_inky_caught = self._num_time_inky_caught + 1
 
-        if self.pacman._current_location == self.inky._current_location or self.pacman._last_location == self.inky._last_location and self._is_ghost_mode:
-            self.inky._current_location = self.inky._spawn_location
-            self.inky._been_through_gate = False
-            self._num_time_inky_caught = self._num_time_inky_caught + 1
+            elif self.pacman._current_location == self.pinky._current_location or self.pacman._last_location == self.pinky._last_location:
+                self.pinky._current_location = self.pinky._spawn_location
+                self.pinky._been_through_gate = False
+                self._num_time_pinky_caught = self._num_time_pinky_caught + 1
 
-        if self.pacman._current_location == self.pinky._current_location or self.pacman._last_location == self.pinky._last_location and self._is_ghost_mode:
-            self.pinky._current_location = self.pinky._spawn_location
-            self.pinky._been_through_gate = False
-            self._num_time_pinky_caught = self._num_time_pinky_caught + 1
+            if self._current_tick == self._ghost_caught_at_tick + 60:
+                self.disable_ghost_mode()
+                self.set_ghost_state_normal
+            else:
+                if self._current_tick > self._ghost_caught_at_tick + 30:
+                    if self._current_tick % 2 == 0:
+                        self.set_ghost_state_panic_one
+                    else:
+                        self.set_ghost_state_panic_two
+                else:
+                    self.set_ghost_state_panic_one
+        else:
+            self.set_ghost_state_normal()
+            if self.pacman._last_location in ghost_last_location or self.pacman._current_location in ghost_current_location:
+                self.pacman_lives = self.pacman_lives - 1
+                print('Lives left', self.pacman_lives)
+                self.reset_agent_positions()
 
-        if self._current_tick == self._ghost_caught_at_tick + 30:
-            self.disable_ghost_mode()
-
-        if self.pacman_lives <= 0:
-            self.complete = True
+            if self.pacman_lives <= 0:
+                self.complete = True
 
     def reset_agent_positions(self):
         self.blinky._current_location = self.blinky._spawn_location
@@ -163,20 +174,30 @@ class Game:
 
     def enable_ghost_mode(self):
         self._is_ghost_mode = True
-        self.blinky.id = 11
-        self.pinky.id = 11
-        self.inky.id = 11
-        self.clyde.id = 11
         self._ghost_caught_at_tick = self._current_tick
         print("Ghost Mode Enabled at Tick: ", self._current_tick)
         print(self._ghost_caught_at_tick)
 
     def disable_ghost_mode(self):
         self._is_ghost_mode = False
+
+    def set_ghost_state_normal(self):
         self.blinky.id = 3
         self.pinky.id = 4
         self.inky.id = 5
         self.clyde.id = 6
+
+    def set_ghost_state_panic_one(self):
+        self.blinky.id = 11
+        self.pinky.id = 11
+        self.inky.id = 11
+        self.clyde.id = 11
+
+    def set_ghost_state_panic_two(self):
+        self.blinky.id = 12
+        self.pinky.id = 12
+        self.inky.id = 12
+        self.clyde.id = 12
 
     def calculate_board(self):
         current_state = copy.deepcopy(self.state)
