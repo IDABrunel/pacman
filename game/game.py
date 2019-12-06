@@ -9,6 +9,10 @@ from agents.pacman import Pacman
 
 class Game:
     complete = False
+    _num_time_blinky_caught = 0
+    _num_time_clyde_caught = 0
+    _num_time_inky_caught = 0
+    _num_time_pinky_caught = 0
     _is_ghost_mode = False
 
     def normalise_coordinates(self, location):
@@ -64,6 +68,7 @@ class Game:
 
         nuggets_left = self.count_nuggets_left()
         print('Nuggets left', nuggets_left)
+        print('Score:', self.calc_score())
 
         print('Fruit eaten', self.pacman._fruit_collected)
 
@@ -131,10 +136,17 @@ class Game:
         return nuggets
 
     def enable_ghost_mode(self):
-        self._is_ghost_mode = True
+        self.is_ghost_mode = True
 
     def disable_ghost_mode(self):
-        self._is_ghost_mode = False
+        self.is_ghost_mode = False
+
+    def calc_score(self):
+        nuggets_score = ((176 - self.count_nuggets_left()) * 5)
+        fruit_score = ((self.pacman._fruit_collected) * 100)
+        caught_ghosts = ((self._num_time_blinky_caught * 40) + (self._num_time_clyde_caught * 40) + (self._num_time_inky_caught * 40) + (self._num_time_pinky_caught * 40))
+
+        return nuggets_score + fruit_score + caught_ghosts
 
     def calculate_board(self):
         current_state = copy.deepcopy(self.state)
