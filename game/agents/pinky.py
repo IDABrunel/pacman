@@ -6,7 +6,6 @@ class Pinky:
         self._spawn_location = spawnLocation
         self._last_location = spawnLocation
         self._current_location = spawnLocation
-        self._is_ghost_mode = False
         self._been_through_gate = False
 
     def handle_move(self, move):
@@ -38,6 +37,6 @@ class Pinky:
 
     def is_valid_location(self, location):
         location = self._game.normalise_coordinates(location)
-        if not self._is_ghost_mode and not self._been_through_gate:
-            return self._game.state[location[1]][location[0]] in [0, 7, 8]
-        return self._game.state[location[1]][location[0]] in [0, 8]
+        if self._been_through_gate:
+            return self._game.state[location[1]][location[0]] in [0, 8]
+        return self._game.state[location[1]][location[0]] in [0, 7, 8]
