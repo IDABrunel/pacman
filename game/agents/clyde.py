@@ -6,6 +6,7 @@ class Clyde:
         self._spawn_location = spawnLocation
         self._last_location = spawnLocation
         self._current_location = spawnLocation
+        self._been_through_gate = False
 
     def handle_move(self, move):
         proposed_location = self.calculate_move_location(move)
@@ -41,4 +42,6 @@ class Clyde:
 
     def is_valid_location(self, location):
         location = self._game.normalise_coordinates(location)
-        return self._game.state[location[1]][location[0]] in [0, 8, 10]
+        if self._been_through_gate:
+            return self._game.state[location[1]][location[0]] in [0, 8, 9, 10]
+        return self._game.state[location[1]][location[0]] in [0, 7, 8, 9, 10]
