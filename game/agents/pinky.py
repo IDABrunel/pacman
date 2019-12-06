@@ -6,6 +6,7 @@ class Pinky:
         self._spawn_location = spawnLocation
         self._last_location = spawnLocation
         self._current_location = spawnLocation
+        self._been_through_gate = False
 
     def handle_move(self, move):
         proposed_location = self.calculate_move_location(move)
@@ -13,6 +14,11 @@ class Pinky:
         if self.is_valid_location(proposed_location):
             self._last_location = proposed_location
             self._current_location = proposed_location
+
+        if self._game.state[
+                self._current_location[1]][self._current_location[0]] == 0 and self._game.count_nuggets_left() == 35:
+            self._game.state[
+                self._current_location[1]][self._current_location[0]] = 10
 
         return self._current_location
 
@@ -36,4 +42,6 @@ class Pinky:
 
     def is_valid_location(self, location):
         location = self._game.normalise_coordinates(location)
-        return self._game.state[location[1]][location[0]] in [0, 8, 9]
+        if self._been_through_gate:
+            return self._game.state[location[1]][location[0]] in [0, 8, 9, 10]
+        return self._game.state[location[1]][location[0]] in [0, 7, 8, 9, 10]

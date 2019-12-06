@@ -70,15 +70,27 @@ class Game:
         nuggets_left = self.count_nuggets_left()
         print('Nuggets left', nuggets_left)
 
+        print('Fruit eaten', self.pacman._fruit_collected)
+
         if nuggets_left == 0:
             self.complete = True
 
         print('Ghost Killing Nuggets Remaining', self.pacman._ghost_killing_nuggets_collected)
+        print('ghost mode status', self._is_ghost_mode)
         print('game ghost status', self._is_ghost_mode)
         print('blinky has been captured', self._num_time_blinky_caught, 'times')
         print('clyde has been captured', self._num_time_clyde_caught, 'times')
         print('inky has been captured', self._num_time_inky_caught, 'times')
         print('pinky has been captured', self._num_time_pinky_caught, 'times')
+
+        if self.blinky._current_location == [26, 2]:
+            self.blinky._been_through_gate = True
+        elif self.clyde._current_location == [26, 2]:
+            self.clyde._been_through_gate = True
+        elif self.inky._current_location == [26, 2]:
+            self.inky._been_through_gate = True
+        elif self.pinky._current_location == [26, 2]:
+            self.pinky._been_through_gate = True
 
         ghost_last_location = [
             self.blinky._last_location,
@@ -130,6 +142,11 @@ class Game:
         self.inky._current_location = self.inky._spawn_location
         self.pinky._current_location = self.pinky._spawn_location
         self.pacman._current_location = self.pacman._spawn_location
+
+        self.blinky._been_through_gate = False
+        self.clyde._been_through_gate = False
+        self.inky._been_through_gate = False
+        self.pinky._been_through_gate = False
 
     def count_nuggets_left(self):
         nuggets = 0
