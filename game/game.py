@@ -87,14 +87,7 @@ class Game:
         print('inky has been captured', self._num_time_inky_caught, 'times')
         print('pinky has been captured', self._num_time_pinky_caught, 'times')
 
-        if self.blinky._current_location == [26, 2]:
-            self.blinky._been_through_gate = True
-        elif self.clyde._current_location == [26, 2]:
-            self.clyde._been_through_gate = True
-        elif self.inky._current_location == [26, 2]:
-            self.inky._been_through_gate = True
-        elif self.pinky._current_location == [26, 2]:
-            self.pinky._been_through_gate = True
+        self.check_if_ghost_has_been_through_gate()
 
         ghost_last_location = [
             self.blinky._last_location,
@@ -210,6 +203,16 @@ class Game:
         self.pinky.id = 4
         self.inky.id = 5
         self.clyde.id = 6
+
+    def check_if_ghost_has_been_through_gate(self):
+        if self.blinky._current_location == [26, 2]:
+            self.blinky._been_through_gate = True
+        elif self.clyde._current_location == [26, 2]:
+            self.clyde._been_through_gate = True
+        elif self.inky._current_location == [26, 2]:
+            self.inky._been_through_gate = True
+        elif self.pinky._current_location == [26, 2]:
+            self.pinky._been_through_gate = True
 
     def get_current_tick(self, tick):
         return tick
