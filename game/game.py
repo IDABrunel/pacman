@@ -65,6 +65,8 @@ class Game:
         nuggets_left = self.count_nuggets_left()
         print('Nuggets left', nuggets_left)
 
+        print('Fruit eaten', self.pacman._fruit_collected)
+
         if nuggets_left == 0:
             self.complete = True
 

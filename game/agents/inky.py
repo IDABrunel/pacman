@@ -15,6 +15,11 @@ class Inky:
             self._last_location = proposed_location
             self._current_location = proposed_location
 
+        if self._game.state[
+                self._current_location[1]][self._current_location[0]] == 0 and self._game.count_nuggets_left() == 65:
+            self._game.state[
+                self._current_location[1]][self._current_location[0]] = 10
+
         return self._current_location
 
     def calculate_move_location(self, move):
@@ -38,5 +43,5 @@ class Inky:
     def is_valid_location(self, location):
         location = self._game.normalise_coordinates(location)
         if self._been_through_gate:
-            return self._game.state[location[1]][location[0]] in [0, 8, 9]
-        return self._game.state[location[1]][location[0]] in [0, 7, 8, 9]
+            return self._game.state[location[1]][location[0]] in [0, 8, 9, 10]
+        return self._game.state[location[1]][location[0]] in [0, 7, 8, 9, 10]
