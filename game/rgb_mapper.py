@@ -8,7 +8,7 @@ RGB_MAPPINGS = {
     6: [255, 87, 34],  # clyde
     7: [128, 128, 128],  # ghostGate
     8: [10, 10, 0],  # nuggets
-    9: [255, 255, 255]
+    9: [255, 255, 255]  # ghost killing nugget
 }
 
 
