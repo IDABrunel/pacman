@@ -15,6 +15,7 @@ class Game:
     _num_time_inky_caught = 0
     _num_time_pinky_caught = 0
     _ghost_caught_at_tick = 0
+    _current_tick = 0
 
     def normalise_coordinates(self, location):
         x, y = location
@@ -55,12 +56,14 @@ class Game:
 
     def handle_moves(
         self,
+        tick,
         pacman_move,
         blinky_move,
         pinky_move,
         inky_move,
         clyde_move
     ):
+        self._current_tick = tick
         self.blinky.handle_move(blinky_move)
         self.pinky.handle_move(pinky_move)
         self.inky.handle_move(inky_move)
@@ -130,7 +133,7 @@ class Game:
             self.pinky._been_through_gate = False
             self._num_time_pinky_caught = self._num_time_pinky_caught + 1
 
-        if self.game.board.i == self._ghost_caught_at_tick + 30:
+        if self._current_tick == self._ghost_caught_at_tick + 30:
             self.disable_ghost_mode()
 
         if self.pacman_lives <= 0:
@@ -160,11 +163,20 @@ class Game:
 
     def enable_ghost_mode(self):
         self._is_ghost_mode = True
-        self._ghost_caught_at_tick = self.game.board.i
+        self.blinky.id = 11
+        self.pinky.id = 11
+        self.inky.id = 11
+        self.clyde.id = 11
+        self._ghost_caught_at_tick = self._current_tick
+        print("Ghost Mode Enabled at Tick: ", self._current_tick)
         print(self._ghost_caught_at_tick)
 
     def disable_ghost_mode(self):
         self._is_ghost_mode = False
+        self.blinky.id = 3
+        self.pinky.id = 4
+        self.inky.id = 5
+        self.clyde.id = 6
 
     def calculate_board(self):
         current_state = copy.deepcopy(self.state)
@@ -175,3 +187,6 @@ class Game:
         current_state[self.pacman._current_location[1]][self.pacman._current_location[0]] = self.pacman.id
 
         return current_state
+
+    def get_current_tick(self, tick):
+        return tick

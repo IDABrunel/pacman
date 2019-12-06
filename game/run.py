@@ -84,8 +84,9 @@ if args.images:
 i = 1
 while board.complete is False:
     print('Tick...' + str(i))
-
+    current_tick = i
     board.handle_moves(
+        current_tick,
         pacman_move_factory.generate_move(board.pacman),
         blinky_move_factory.generate_move(board.blinky),
         pinky_move_factory.generate_move(board.pinky),
