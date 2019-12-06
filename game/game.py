@@ -9,6 +9,11 @@ from agents.pacman import Pacman
 
 class Game:
     complete = False
+    _num_time_blinky_caught = 0
+    _num_time_clyde_caught = 0
+    _num_time_inky_caught = 0
+    _num_time_pinky_caught = 0
+    _is_ghost_mode = False
 
     def normalise_coordinates(self, location):
         x, y = location
@@ -63,9 +68,24 @@ class Game:
 
         nuggets_left = self.count_nuggets_left()
         print('Nuggets left', nuggets_left)
+        print('Score:', self.calc_score())
+
+        print('Fruit eaten', self.pacman._fruit_collected)
 
         if nuggets_left == 0:
             self.complete = True
+
+        print('Ghost Killing Nuggets Remaining', self.pacman._ghost_killing_nuggets_collected)
+        print('ghost mode status', self._is_ghost_mode)
+
+        if self.blinky._current_location == [26, 2]:
+            self.blinky._been_through_gate = True
+        elif self.clyde._current_location == [26, 2]:
+            self.clyde._been_through_gate = True
+        elif self.inky._current_location == [26, 2]:
+            self.inky._been_through_gate = True
+        elif self.pinky._current_location == [26, 2]:
+            self.pinky._been_through_gate = True
 
         ghost_last_location = [
             self.blinky._last_location,
@@ -100,6 +120,11 @@ class Game:
         self.pinky._current_location = self.pinky._spawn_location
         self.pacman._current_location = self.pacman._spawn_location
 
+        self.blinky._been_through_gate = False
+        self.clyde._been_through_gate = False
+        self.inky._been_through_gate = False
+        self.pinky._been_through_gate = False
+
     def count_nuggets_left(self):
         nuggets = 0
 
@@ -109,6 +134,19 @@ class Game:
                     nuggets = nuggets + 1
 
         return nuggets
+
+    def enable_ghost_mode(self):
+        self.is_ghost_mode = True
+
+    def disable_ghost_mode(self):
+        self.is_ghost_mode = False
+
+    def calc_score(self):
+        nuggets_score = ((176 - self.count_nuggets_left()) * 5)
+        fruit_score = ((self.pacman._fruit_collected) * 100)
+        caught_ghosts = ((self._num_time_blinky_caught * 40) + (self._num_time_clyde_caught * 40) + (self._num_time_inky_caught * 40) + (self._num_time_pinky_caught * 40))
+
+        return nuggets_score + fruit_score + caught_ghosts
 
     def calculate_board(self):
         current_state = copy.deepcopy(self.state)
