@@ -67,13 +67,13 @@ class Game:
         if nuggets_left == 0:
             self.complete = True
 
-        if self.blinky._current_location == [26, 3]:
+        if self.blinky._current_location == [26, 2]:
             self.blinky._been_through_gate = True
-        elif self.clyde._current_location == [26, 3]:
+        elif self.clyde._current_location == [26, 2]:
             self.clyde._been_through_gate = True
-        elif self.inky._current_location == [26, 3]:
+        elif self.inky._current_location == [26, 2]:
             self.inky._been_through_gate = True
-        elif self.pinky._current_location == [26, 3]:
+        elif self.pinky._current_location == [26, 2]:
             self.pinky._been_through_gate = True
 
         ghost_last_location = [
@@ -109,10 +109,10 @@ class Game:
         self.pinky._current_location = self.pinky._spawn_location
         self.pacman._current_location = self.pacman._spawn_location
 
-        self.blinky._been_through_gate = True
-        self.clyde._been_through_gate = True
-        self.inky._been_through_gate = True
-        self.pinky._been_through_gate = True
+        self.blinky._been_through_gate = False
+        self.clyde._been_through_gate = False
+        self.inky._been_through_gate = False
+        self.pinky._been_through_gate = False
 
     def count_nuggets_left(self):
         nuggets = 0
