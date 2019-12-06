@@ -9,14 +9,11 @@ from agents.pacman import Pacman
 
 class Game:
     complete = False
-<<<<<<< HEAD
     _num_time_blinky_caught = 0
     _num_time_clyde_caught = 0
     _num_time_inky_caught = 0
     _num_time_pinky_caught = 0
-=======
     _is_ghost_mode = False
->>>>>>> master
 
     def normalise_coordinates(self, location):
         x, y = location
