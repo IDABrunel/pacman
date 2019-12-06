@@ -6,7 +6,7 @@ RGB_MAPPINGS = {
     4: [233, 30, 30],  # pinky
     5: [0, 188, 212],  # inky
     6: [255, 87, 34],  # clyde
-    7: [255, 255, 255],
+    7: [128, 128, 128],  # ghostGate
     8: [10, 10, 0],  # nuggets
     9: [255, 255, 255]  # ghost killing nugget
 }
