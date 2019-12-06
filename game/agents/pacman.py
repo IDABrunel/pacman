@@ -8,7 +8,11 @@ class Pacman:
         self._last_location = spawnLocation
         self._current_location = spawnLocation
         self._nuggets_collected = 0
+<<<<<<< HEAD
         self._fruit_collected = 0
+=======
+        self._ghost_killing_nuggets_collected = 0
+>>>>>>> master
 
     def handle_move(self, move):
         proposed_location = self.calculate_move_location(move)
@@ -16,6 +20,13 @@ class Pacman:
         if self.is_valid_location(proposed_location):
             self._last_location = self._current_location
             self._current_location = proposed_location
+
+        if self._game.state[
+                self._current_location[1]][self._current_location[0]] == 9:
+            self._game.state[
+                self._current_location[1]][self._current_location[0]] = 0
+            self._ghost_killing_nuggets_collected = self._ghost_killing_nuggets_collected + 1
+            self._game.enable_ghost_mode()
 
         if self._game.state[
                 self._current_location[1]][self._current_location[0]] == 8:
@@ -51,4 +62,8 @@ class Pacman:
 
     def is_valid_location(self, location):
         location = self._game.normalise_coordinates(location)
+<<<<<<< HEAD
         return self._game.state[location[1]][location[0]] in [0, 8, 10]
+=======
+        return self._game.state[location[1]][location[0]] in [0, 8, 9]
+>>>>>>> master
