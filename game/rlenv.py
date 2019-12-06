@@ -31,12 +31,12 @@ INIT_PACMAN_LOCATION = [26, 10]
 class PacmanEnv(gym.Env):
 
     def __init__(self):
-        self.observation_space = spaces.Box(low=0, high=255, shape=(12, 60, 3), dtype=np.uint8)
+        self.observation_space = spaces.Box(low=0, high=255, shape=(12, 60, 1), dtype=np.uint8)
         self.action_space = spaces.Discrete(5)
         pass
 
     def render(self):
-        return board_to_rgb(self.board.calculate_board())
+        return self.board.calculate_board()
 
     def step(self, action):
         self.board.handle_moves(
@@ -50,7 +50,7 @@ class PacmanEnv(gym.Env):
         reward = (176 - self.board.count_nuggets_left()) - self.last_score
         self.last_score = 176 - self.board.count_nuggets_left()
 
-        return board_to_rgb(self.board.calculate_board()), reward, self.board.complete, {"ale.lives": self.board.pacman_lives}
+        return self.board.calculate_board(), reward, self.board.complete, {"ale.lives": self.board.pacman_lives}
 
     def reset(self):
         self.board = Game(
@@ -69,4 +69,4 @@ class PacmanEnv(gym.Env):
 
         self.last_score = 0
 
-        return np.array(board_to_rgb(self.board.calculate_board()))
+        return np.array(self.board.calculate_board())
