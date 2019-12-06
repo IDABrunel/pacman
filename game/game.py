@@ -139,37 +139,22 @@ class Game:
             else:
                 if self._current_tick > self._ghost_caught_at_tick + 30:
                     if self._current_tick % 2 == 0:
-                        self.blinky.id = 11
-                        self.pinky.id = 11
-                        self.inky.id = 11
-                        self.clyde.id = 11
+                        self.change_all_ghost_id(11)
                     else:
-                        self.blinky.id = 12
-                        self.pinky.id = 12
-                        self.inky.id = 12
-                        self.clyde.id = 12
+                        self.change_all_ghost_id(12)
                 else:
-                    self.blinky.id = 11
-                    self.pinky.id = 11
-                    self.inky.id = 11
-                    self.clyde.id = 11
+                    self.change_all_ghost_id(11)
         else:
             self.blinky.id = 3
             self.pinky.id = 4
             self.inky.id = 5
             self.clyde.id = 6
-            if self.pacman._current_location in ghost_current_location:
+            if self.pacman._current_location in ghost_current_location or self.pacman._last_location in ghost_last_location:
                 self.pacman_lives = self.pacman_lives - 1
                 print('Lives left', self.pacman_lives)
                 if self.pacman_lives <= 0:
                     self.complete = True
                 self.reset_agent_positions()
-                if self.pacman._last_location in ghost_last_location:
-                    self.pacman_lives = self.pacman_lives - 1
-                    print('Lives left', self.pacman_lives)
-                    self.reset_agent_positions()
-                    if self.pacman_lives <= 0:
-                        self.complete = True
 
     def reset_agent_positions(self):
         self.blinky._current_location = self.blinky._spawn_location
@@ -211,6 +196,12 @@ class Game:
         current_state[self.pacman._current_location[1]][self.pacman._current_location[0]] = self.pacman.id
 
         return current_state
+
+    def change_all_ghost_id(self, new_id):
+        self.blinky.id = new_id
+        self.pinky.id = new_id
+        self.inky.id = new_id
+        self.clyde.id = new_id
 
     def get_current_tick(self, tick):
         return tick

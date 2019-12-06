@@ -42,6 +42,6 @@ class Blinky:
 
     def is_valid_location(self, location):
         location = self._game.normalise_coordinates(location)
-        if self._been_through_gate:
+        if self._been_through_gate or self._game._is_ghost_mode:
             return self._game.state[location[1]][location[0]] in [0, 8, 9, 10]
         return self._game.state[location[1]][location[0]] in [0, 7, 8, 9, 10]
