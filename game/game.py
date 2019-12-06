@@ -14,6 +14,7 @@ class Game:
     _num_time_clyde_caught = 0
     _num_time_inky_caught = 0
     _num_time_pinky_caught = 0
+    _ghost_caught_at_tick = 0
 
     def normalise_coordinates(self, location):
         x, y = location
@@ -73,7 +74,7 @@ class Game:
             self.complete = True
 
         print('Ghost Killing Nuggets Remaining', self.pacman._ghost_killing_nuggets_collected)
-        print('game ghost status', self.ghost_mode)
+        print('game ghost status', self._is_ghost_mode)
         print('blinky has been captured', self._num_time_blinky_caught, 'times')
         print('clyde has been captured', self._num_time_clyde_caught, 'times')
         print('inky has been captured', self._num_time_inky_caught, 'times')
@@ -107,15 +108,18 @@ class Game:
             self.clyde._been_through_gate = False
             self._num_time_clyde_caught = self._num_time_clyde_caught + 1
 
-        if self.pacman._current_location == self.inky._current_location or self.pacman._last_location == self.inky._last_location and self.inky._is_ghost_mode:
+        if self.pacman._current_location == self.inky._current_location or self.pacman._last_location == self.inky._last_location and self._is_ghost_mode:
             self.inky._current_location = self.inky._spawn_location
             self.inky._been_through_gate = False
             self._num_time_inky_caught = self._num_time_inky_caught + 1
 
-        if self.pacman._current_location == self.pinky._current_location or self.pacman._last_location == self.pinky._last_location and self.pinky._is_ghost_mode:
+        if self.pacman._current_location == self.pinky._current_location or self.pacman._last_location == self.pinky._last_location and self._is_ghost_mode:
             self.pinky._current_location = self.pinky._spawn_location
             self.pinky._been_through_gate = False
             self._num_time_pinky_caught = self._num_time_pinky_caught + 1
+
+        if self.game.board.i == self._ghost_caught_at_tick + 30:
+            self.disable_ghost_mode()
 
         if self.pacman_lives <= 0:
             self.complete = True
@@ -139,6 +143,8 @@ class Game:
 
     def enable_ghost_mode(self):
         self._is_ghost_mode = True
+        self._ghost_caught_at_tick = self.game.board.i
+        print(self._ghost_caught_at_tick)
 
     def disable_ghost_mode(self):
         self._is_ghost_mode = False
