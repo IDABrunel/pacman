@@ -9,6 +9,10 @@ from agents.pacman import Pacman
 
 class Game:
     complete = False
+    _num_time_blinky_caught = 0
+    _num_time_clyde_caught = 0
+    _num_time_inky_caught = 0
+    _num_time_pinky_caught = 0
 
     def normalise_coordinates(self, location):
         x, y = location
@@ -114,8 +118,9 @@ class Game:
     def calc_score(self):
         nuggets_score = ((176 - self.count_nuggets_left()) * 5)
         fruit_score = ((self.pacman._fruit_collected) * 100)
+        caught_ghosts = ((_num_time_blinky_caught * 40) + (_num_time_clyde_caught * 40) + (_num_time_inky_caught * 40) + (_num_time_pinky_caught * 40))
 
-        return nuggets_score + fruit_score
+        return nuggets_score + fruit_score + caught_ghosts
 
     def calculate_board(self):
         current_state = copy.deepcopy(self.state)
