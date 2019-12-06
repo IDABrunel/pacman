@@ -150,7 +150,13 @@ class Game:
             self.pinky.id = 4
             self.inky.id = 5
             self.clyde.id = 6
-            if self.pacman._current_location in ghost_current_location or self.pacman._last_location in ghost_last_location:
+            if self.pacman._current_location in ghost_current_location:
+                self.pacman_lives = self.pacman_lives - 1
+                print('Lives left', self.pacman_lives)
+                if self.pacman_lives <= 0:
+                    self.complete = True
+                self.reset_agent_positions()
+            if self.pacman._last_location in ghost_last_location:
                 self.pacman_lives = self.pacman_lives - 1
                 print('Lives left', self.pacman_lives)
                 if self.pacman_lives <= 0:
