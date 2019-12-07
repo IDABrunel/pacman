@@ -14,6 +14,7 @@ class Game:
     _num_time_inky_caught = 0
     _num_time_pinky_caught = 0
     _is_ghost_mode = False
+    _version_type = 'fullrandom'
 
     def normalise_coordinates(self, location):
         x, y = location
@@ -147,6 +148,16 @@ class Game:
         caught_ghosts = ((self._num_time_blinky_caught * 40) + (self._num_time_clyde_caught * 40) + (self._num_time_inky_caught * 40) + (self._num_time_pinky_caught * 40))
 
         return nuggets_score + fruit_score + caught_ghosts
+
+    def version_type_of_pacman(self):
+        if self._version_type == 'fullrandom':
+            return '1'
+        elif self._version_type == 'validrandom':
+            return '2'
+        elif self._version_type == 'qlearning':
+            return '3'
+        elif self._version_type == 'deepneual':
+            return '4'
 
     def calculate_board(self):
         current_state = copy.deepcopy(self.state)

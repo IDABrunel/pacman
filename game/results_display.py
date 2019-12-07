@@ -16,10 +16,12 @@ def generate_stats(board):
     heart = Image.open('./resources/heart.png')
     heart.thumbnail((60, 7), Image.ANTIALIAS)
 
+    d = ImageDraw.Draw(img)
+
+    d.text((30 - d.textsize(str(board.version_type_of_pacman()))[0], -1), str(board.version_type_of_pacman()), fill=(255, 255, 255))
+
     for h in range(0, board.pacman_lives):
         img.paste(heart, (h * 8, 1))
-
-    d = ImageDraw.Draw(img)
 
     d.text((60 - d.textsize(str(board.calc_score()))[0], -1), str(board.calc_score()), fill=(100, 100, 0))
 
