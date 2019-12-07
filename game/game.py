@@ -104,37 +104,13 @@ class Game:
         ]
 
         if self._is_ghost_mode:
-            if self.pacman._current_location == self.blinky._current_location or self.pacman._last_location == self.blinky._last_location:
-                self.blinky._current_location = self.blinky._spawn_location
-                self.blinky._been_through_gate = False
-                self._num_time_blinky_caught = self._num_time_blinky_caught + 1
-
-            if self.pacman._current_location == self.clyde._current_location or self.pacman._last_location == self.clyde._last_location:
-                self.clyde._current_location = self.clyde._spawn_location
-                self.clyde._been_through_gate = False
-                self._num_time_clyde_caught = self._num_time_clyde_caught + 1
-
-            if self.pacman._current_location == self.inky._current_location or self.pacman._last_location == self.inky._last_location:
-                self.inky._current_location = self.inky._spawn_location
-                self.inky._been_through_gate = False
-                self._num_time_inky_caught = self._num_time_inky_caught + 1
-
-            if self.pacman._current_location == self.pinky._current_location or self.pacman._last_location == self.pinky._last_location:
-                self.pinky._current_location = self.pinky._spawn_location
-                self.pinky._been_through_gate = False
-                self._num_time_pinky_caught = self._num_time_pinky_caught + 1
+            self.has_pacman_eaten_ghost()
 
             if self._current_tick == self._ghost_caught_at_tick + 60:
                 self.disable_ghost_mode()
                 self.set_ghosts_to_default_id()
             else:
-                if self._current_tick > self._ghost_caught_at_tick + 30:
-                    if self._current_tick % 2 == 0:
-                        self.change_all_ghost_id(11)
-                    else:
-                        self.change_all_ghost_id(12)
-                else:
-                    self.change_all_ghost_id(11)
+                self.visualise_active_ghost_mode_on_board()
         else:
             self.set_ghosts_to_default_id()
             if self.pacman._current_location in ghost_current_location or self.pacman._last_location in ghost_last_location:
@@ -142,7 +118,7 @@ class Game:
                 print('Lives left', self.pacman_lives)
                 if self.pacman_lives <= 0:
                     self.complete = True
-                self.reset_agent_positions()
+                    self.reset_agent_positions()
 
     def reset_agent_positions(self):
         self.blinky._current_location = self.blinky._spawn_location
@@ -213,6 +189,33 @@ class Game:
             self.inky._been_through_gate = True
         elif self.pinky._current_location == [26, 2]:
             self.pinky._been_through_gate = True
+
+    def has_pacman_eaten_ghost(self):
+        if self.pacman._current_location == self.blinky._current_location or self.pacman._last_location == self.blinky._last_location:
+            self.blinky._current_location = self.blinky._spawn_location
+            self.blinky._been_through_gate = False
+            self._num_time_blinky_caught = self._num_time_blinky_caught + 1
+        if self.pacman._current_location == self.clyde._current_location or self.pacman._last_location == self.clyde._last_location:
+            self.clyde._current_location = self.clyde._spawn_location
+            self.clyde._been_through_gate = False
+            self._num_time_clyde_caught = self._num_time_clyde_caught + 1
+        if self.pacman._current_location == self.inky._current_location or self.pacman._last_location == self.inky._last_location:
+            self.inky._current_location = self.inky._spawn_location
+            self.inky._been_through_gate = False
+            self._num_time_inky_caught = self._num_time_inky_caught + 1
+        if self.pacman._current_location == self.pinky._current_location or self.pacman._last_location == self.pinky._last_location:
+            self.pinky._current_location = self.pinky._spawn_location
+            self.pinky._been_through_gate = False
+            self._num_time_pinky_caught = self._num_time_pinky_caught + 1
+
+    def visualise_active_ghost_mode_on_board(self):
+        if self._current_tick > self._ghost_caught_at_tick + 30:
+            if self._current_tick % 2 == 0:
+                self.change_all_ghost_id(11)
+            else:
+                self.change_all_ghost_id(12)
+        else:
+            self.change_all_ghost_id(11)
 
     def get_current_tick(self, tick):
         return tick
