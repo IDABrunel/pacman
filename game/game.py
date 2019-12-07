@@ -83,20 +83,6 @@ class Game:
 
         self.check_if_ghost_has_been_through_gate()
 
-        ghost_last_location = [
-            self.blinky._last_location,
-            self.clyde._last_location,
-            self.inky._last_location,
-            self.pinky._last_location
-        ]
-
-        ghost_current_location = [
-            self.blinky._current_location,
-            self.clyde._current_location,
-            self.inky._current_location,
-            self.pinky._current_location
-        ]
-
         if self._is_ghost_mode:
             self.has_pacman_eaten_ghost()
 
@@ -107,12 +93,6 @@ class Game:
                 self.visualise_active_ghost_mode_on_board()
         else:
             self.set_ghosts_to_default_id()
-            if self.pacman._current_location in ghost_current_location or self.pacman._last_location in ghost_last_location:
-                self.pacman_lives = self.pacman_lives - 1
-                print('Lives left', self.pacman_lives)
-                if self.pacman_lives <= 0:
-                    self.complete = True
-                self.reset_agent_positions()
 
     def reset_agent_positions(self):
         self.blinky._current_location = self.blinky._spawn_location
@@ -183,6 +163,28 @@ class Game:
             self.inky._been_through_gate = True
         elif self.pinky._current_location == [26, 2]:
             self.pinky._been_through_gate = True
+
+    def has_ghost_eaten_pacman(self):
+        ghost_last_location = [
+            self.blinky._last_location,
+            self.clyde._last_location,
+            self.inky._last_location,
+            self.pinky._last_location
+        ]
+
+        ghost_current_location = [
+            self.blinky._current_location,
+            self.clyde._current_location,
+            self.inky._current_location,
+            self.pinky._current_location
+        ]
+
+        if self.pacman._current_location in ghost_current_location or self.pacman._last_location in ghost_last_location:
+            self.pacman_lives = self.pacman_lives - 1
+            print('Lives left', self.pacman_lives)
+            if self.pacman_lives <= 0:
+                self.complete = True
+            self.reset_agent_positions()
 
     def has_pacman_eaten_ghost(self):
         if self.pacman._current_location == self.blinky._current_location or self.pacman._last_location == self.blinky._last_location:
