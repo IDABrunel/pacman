@@ -118,7 +118,7 @@ class Game:
                 print('Lives left', self.pacman_lives)
                 if self.pacman_lives <= 0:
                     self.complete = True
-                    self.reset_agent_positions()
+                self.reset_agent_positions()
 
     def reset_agent_positions(self):
         self.blinky._current_location = self.blinky._spawn_location
