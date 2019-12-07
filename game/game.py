@@ -72,20 +72,14 @@ class Game:
 
         nuggets_left = self.count_nuggets_left()
         print('Nuggets left', nuggets_left)
-        print('Score:', self.calc_score())
-
         print('Fruit eaten', self.pacman._fruit_collected)
+        print('Ghost Killing Nuggets Remaining', self.pacman._ghost_killing_nuggets_collected)
+        print('ghost mode status', self._is_ghost_mode)
+        print('blinky captured: ', self._num_time_blinky_caught, ', clyde captured: ', self._num_time_clyde_caught, ', inky captured: ', self._num_time_inky_caught, ' and pinky captured: ', self._num_time_pinky_caught)
+        print('Score:', self.calc_score())
 
         if nuggets_left == 0:
             self.complete = True
-
-        print('Ghost Killing Nuggets Remaining', self.pacman._ghost_killing_nuggets_collected)
-        print('ghost mode status', self._is_ghost_mode)
-        print('game ghost status', self._is_ghost_mode)
-        print('blinky has been captured', self._num_time_blinky_caught, 'times')
-        print('clyde has been captured', self._num_time_clyde_caught, 'times')
-        print('inky has been captured', self._num_time_inky_caught, 'times')
-        print('pinky has been captured', self._num_time_pinky_caught, 'times')
 
         self.check_if_ghost_has_been_through_gate()
 
