@@ -1,5 +1,4 @@
 from game import Game
-from rgb_mapper import board_to_rgb
 from moves import ValidRandomWithMomentem
 import gym
 from gym import spaces
