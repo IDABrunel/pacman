@@ -1,13 +1,13 @@
 from random import randint
 
 
-class Moves:
-    @classmethod
-    def fully_random(self):
+class FullRandom:
+    def generate_move(self, _):
         return ['U', 'D', 'L', 'R', ''][randint(0, 4)]
 
-    @classmethod
-    def valid_random(self, agent):
+
+class ValidRandom:
+    def generate_move(self, agent):
         possi_moves = ['U', 'D', 'L', 'R', '']
         valid_moves = []
 
@@ -16,14 +16,6 @@ class Moves:
                 valid_moves.append(move)
 
         return valid_moves[randint(0, len(valid_moves) - 1)]
-
-
-class UserInput:
-    def __init__(self):
-        pass
-
-    def generate_move(self):
-        return input("Direction U/D/L/R: ")
 
 
 class ValidRandomWithMomentem:
@@ -37,6 +29,11 @@ class ValidRandomWithMomentem:
         ):
             return self.last_move
 
-        self.last_move = Moves.valid_random(agent)
+        self.last_move = ValidRandom().generate_move(agent)
 
         return self.last_move
+
+
+class UserInput:
+    def generate_move(self, _):
+        return input("Direction U/D/L/R: ")
