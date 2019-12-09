@@ -3,7 +3,7 @@ import argparse
 from matplotlib import pyplot as plt
 from game import Game
 from arduino import ArduinoRGBMatrix
-from moves import ValidRandomWithMomentem
+from moves import FullRandom, ValidRandom, ValidRandomWithMomentem, UserInput
 from results_display import generate_board_with_stats
 
 
@@ -48,6 +48,11 @@ parser.add_argument('--nooutput', action='store_true',
                     help='Enables nooutput')
 parser.add_argument('--images', action='store_true',
                     help='Saves each figure to ./images/xxxx.png')
+parser.add_argument('--strategy',
+                    type=str,
+                    choices=['full_random', 'valid_random', 'valid_random_momentem', 'user_input'],
+                    default='valid_random_momentem',
+                    help='Pacman move strategy')
 
 if len(sys.argv[1:]) == 0:
     parser.print_help()
@@ -59,7 +64,18 @@ blinky_move_factory = ValidRandomWithMomentem()
 pinky_move_factory = ValidRandomWithMomentem()
 inky_move_factory = ValidRandomWithMomentem()
 clyde_move_factory = ValidRandomWithMomentem()
-pacman_move_factory = ValidRandomWithMomentem()
+
+if args.strategy == 'full_random':
+    pacman_move_factory = FullRandom()
+elif args.strategy == 'valid_random':
+    pacman_move_factory = ValidRandom()
+elif args.strategy == 'valid_random_momentem':
+    pacman_move_factory = ValidRandomWithMomentem()
+elif args.strategy == 'user_input':
+    pacman_move_factory = UserInput()
+else:
+    raise 'Unknown movmement strategy.'
+
 
 if args.arduino:
     arduino_matrix = ArduinoRGBMatrix()
