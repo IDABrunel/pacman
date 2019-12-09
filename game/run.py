@@ -3,7 +3,7 @@ import argparse
 from matplotlib import pyplot as plt
 from game import Game
 from arduino import ArduinoRGBMatrix
-from moves import FullRandom, ValidRandom, ValidRandomWithMomentem, UserInput
+from moves import FullRandom, ValidRandom, ValidRandomWithMomentem, UserInput, DeepQ
 from results_display import generate_board_with_stats
 
 
@@ -50,9 +50,12 @@ parser.add_argument('--images', action='store_true',
                     help='Saves each figure to ./images/xxxx.png')
 parser.add_argument('--strategy',
                     type=str,
-                    choices=['full_random', 'valid_random', 'valid_random_momentem', 'user_input'],
+                    choices=['full_random', 'valid_random', 'valid_random_momentem', 'user_input', 'deepq'],
                     default='valid_random_momentem',
                     help='Pacman move strategy')
+parser.add_argument('--deepq_path',
+                    type=str,
+                    help='Path to DeepQ model')
 
 if len(sys.argv[1:]) == 0:
     parser.print_help()
@@ -73,6 +76,8 @@ elif args.strategy == 'valid_random_momentem':
     pacman_move_factory = ValidRandomWithMomentem()
 elif args.strategy == 'user_input':
     pacman_move_factory = UserInput()
+elif args.strategy == 'deepq':
+    pacman_move_factory = DeepQ(board, args.deepq_path)
 else:
     raise 'Unknown movmement strategy.'
 
