@@ -22,7 +22,7 @@ INIT_BOARD_STATE = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ]
 
-INIT_BLINKY_LOCATION = [26, 4]
+INIT_BLINKY_LOCATION = [26, 2]
 INIT_PINKY_LOCATION = [26, 5]
 INIT_INKY_LOCATION = [26, 6]
 INIT_CLYDE_LOCATION = [26, 7]
