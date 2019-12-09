@@ -46,8 +46,8 @@ class PacmanEnv(gym.Env):
             self.clyde_move_factory.generate_move(self.board.clyde)
         )
 
-        reward = (176 - self.board.count_nuggets_left()) - self.last_score
-        self.last_score = 176 - self.board.count_nuggets_left()
+        reward = self.board.calc_score() - self.last_score
+        self.last_score = self.board.calc_score()
 
         return self.board.calculate_board(), reward, self.board.complete, {"ale.lives": self.board.pacman_lives}
 
