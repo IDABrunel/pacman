@@ -3,6 +3,7 @@ import argparse
 from matplotlib import pyplot as plt
 from game import Game
 from arduino import ArduinoRGBMatrix
+from arduino_windows import ArduinoWindowsRGBMatrix
 from moves import ValidRandomWithMomentem
 from results_display import generate_board_with_stats
 
@@ -44,6 +45,8 @@ parser.add_argument('--matplotlib', action='store_true',
                     help='Enables matplotlib output')
 parser.add_argument('--arduino', action='store_true',
                     help='Enables Arduino output')
+parser.add_argument('--arduino_windows', action='store_true',
+                    help='Enables Arduino output')
 parser.add_argument('--nooutput', action='store_true',
                     help='Enables nooutput')
 parser.add_argument('--images', action='store_true',
@@ -63,6 +66,14 @@ pacman_move_factory = ValidRandomWithMomentem()
 
 if args.arduino:
     arduino_matrix = ArduinoRGBMatrix()
+    arduino_matrix.clear()
+    arduino_matrix.update_by_n_random_pixels(
+        generate_board_with_stats(board),
+        50
+    )
+
+if args.arduino_windows:
+    arduino_matrix = ArduinoWindowsRGBMatrix()
     arduino_matrix.clear()
     arduino_matrix.update_by_n_random_pixels(
         generate_board_with_stats(board),
