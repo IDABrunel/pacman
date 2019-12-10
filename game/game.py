@@ -94,9 +94,10 @@ class Game:
                 self.set_ghosts_to_default_id()
             else:
                 self.visualise_active_ghost_mode_on_board()
+
         else:
-            self.set_ghosts_to_default_id()
             self.has_ghost_eaten_pacman()
+
 
     def reset_agent_positions(self):
         self.blinky._current_location = self.blinky._spawn_location
@@ -183,14 +184,13 @@ class Game:
             self.pinky._current_location
         ]
 
-        if self.pacman._current_location in ghost_current_location:
-            if self.pacman._last_location in ghost_last_location:
-                self.pacman_lives = self.pacman_lives - 1
-                print('Lives left', self.pacman_lives)
-                if self.pacman_lives <= 0:
-                    self.complete = True
-                self.reset_agent_positions()
-                self.disable_ghost_mode()
+        if self.pacman._current_location in ghost_current_location or self.pacman._last_location in ghost_last_location:
+            self.pacman_lives = self.pacman_lives - 1
+            print('Lives left', self.pacman_lives)
+            if self.pacman_lives <= 0:
+                self.complete = True
+            self.reset_agent_positions()
+            self.disable_ghost_mode()
 
     def has_pacman_eaten_ghost(self):
         if self.pacman._current_location == self.blinky._current_location or self.pacman._last_location == self.blinky._last_location:
