@@ -93,6 +93,7 @@ class Game:
                 self.visualise_active_ghost_mode_on_board()
         else:
             self.set_ghosts_to_default_id()
+            self.has_ghost_eaten_pacman()
 
     def reset_agent_positions(self):
         self.blinky._current_location = self.blinky._spawn_location
@@ -123,7 +124,7 @@ class Game:
         print(self._ghost_caught_at_tick)
 
     def disable_ghost_mode(self):
-        self.is_ghost_mode = False
+        self._is_ghost_mode = False
 
     def calc_score(self):
         nuggets_score = ((176 - self.count_nuggets_left()) * 5)
@@ -185,6 +186,7 @@ class Game:
             if self.pacman_lives <= 0:
                 self.complete = True
             self.reset_agent_positions()
+            self.disable_ghost_mode()
 
     def has_pacman_eaten_ghost(self):
         if self.pacman._current_location == self.blinky._current_location or self.pacman._last_location == self.blinky._last_location:
