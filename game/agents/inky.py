@@ -17,7 +17,7 @@ class Inky:
             self._current_location = proposed_location
 
         if not self._has_spawned_fruit and not self._game._is_ghost_mode:
-            if self._game.state[self._current_location[1]][self._current_location[0]] == 0 and self._game.count_nuggets_left() == 65:
+            if self._game.state[self._current_location[1]][self._current_location[0]] == 0 and self._game.count_nuggets_left() == 60:
                 self._game.state[self._current_location[1]][self._current_location[0]] = 10
                 self._has_spawned_fruit = True
 

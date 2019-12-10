@@ -16,6 +16,8 @@ class Game:
     _num_time_pinky_caught = 0
     _ghost_caught_at_tick = 0
     _current_tick = 0
+    _ghost_mode_total_duration_in_ticks = 60
+    _ghost_mode_total_flickering_duration_in_ticks = 30
 
     def normalise_coordinates(self, location):
         x, y = location
@@ -86,7 +88,7 @@ class Game:
         if self._is_ghost_mode:
             self.has_pacman_eaten_ghost()
 
-            if self._current_tick == self._ghost_caught_at_tick + 60:
+            if self._current_tick == self._ghost_caught_at_tick + self._ghost_mode_total_duration_in_ticks:
                 self.disable_ghost_mode()
                 self.set_ghosts_to_default_id()
             else:
@@ -180,13 +182,14 @@ class Game:
             self.pinky._current_location
         ]
 
-        if self.pacman._current_location in ghost_current_location or self.pacman._last_location in ghost_last_location:
-            self.pacman_lives = self.pacman_lives - 1
-            print('Lives left', self.pacman_lives)
-            if self.pacman_lives <= 0:
-                self.complete = True
-            self.reset_agent_positions()
-            self.disable_ghost_mode()
+        if self.pacman._current_location in ghost_current_location:
+            if self.pacman._last_location in ghost_last_location:
+                self.pacman_lives = self.pacman_lives - 1
+                print('Lives left', self.pacman_lives)
+                if self.pacman_lives <= 0:
+                    self.complete = True
+                self.reset_agent_positions()
+                self.disable_ghost_mode()
 
     def has_pacman_eaten_ghost(self):
         if self.pacman._current_location == self.blinky._current_location or self.pacman._last_location == self.blinky._last_location:
@@ -207,7 +210,7 @@ class Game:
             self._num_time_pinky_caught = self._num_time_pinky_caught + 1
 
     def visualise_active_ghost_mode_on_board(self):
-        if self._current_tick > self._ghost_caught_at_tick + 30:
+        if self._current_tick > self._ghost_caught_at_tick + self._ghost_mode_total_flickering_duration_in_ticks:
             if self._current_tick % 2 == 0:
                 self.change_all_ghost_id(11)
             else:
