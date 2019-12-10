@@ -98,7 +98,6 @@ class Game:
         else:
             self.has_ghost_eaten_pacman()
 
-
     def reset_agent_positions(self):
         self.blinky._current_location = self.blinky._spawn_location
         self.clyde._current_location = self.clyde._spawn_location
