@@ -14,7 +14,7 @@ class Game:
     _num_time_inky_caught = 0
     _num_time_pinky_caught = 0
     _is_ghost_mode = False
-    _total_nuggets_on_board = 0
+    _initial_total_nuggets_on_board = 0
 
     def normalise_coordinates(self, location):
         x, y = location
@@ -52,7 +52,7 @@ class Game:
         self.clyde = Clyde(self, clyde_current_location)
         self.pacman = Pacman(self, pacman_current_location)
         self.pacman_lives = 3
-        self._total_nuggets_on_board = self.count_nuggets_left()
+        self._initial_total_nuggets_on_board = self.count_nuggets_left()
 
     def handle_moves(
         self,
@@ -144,7 +144,7 @@ class Game:
         self.is_ghost_mode = False
 
     def calc_score(self):
-        nuggets_score = ((self._total_nuggets_on_board - self.count_nuggets_left()) * 5)
+        nuggets_score = ((self._initial_total_nuggets_on_board - self.count_nuggets_left()) * 5)
         fruit_score = ((self.pacman._fruit_collected) * 100)
         caught_ghosts = ((self._num_time_blinky_caught * 40) + (self._num_time_clyde_caught * 40) + (self._num_time_inky_caught * 40) + (self._num_time_pinky_caught * 40))
 
