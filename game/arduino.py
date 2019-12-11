@@ -18,9 +18,7 @@ class ArduinoRGBMatrix:
     def __init__(self):
         self.width = 60
         self.height = 21
-        self.current_state = generate_empty_rgb_matrix(self.width, self.height)
-        self.serial = serial.Serial('/dev/ttyACM0', 9600)
-        time.sleep(1)
+        self.current_state = generate_empty_rgb_matrix(self._width, self._height)
 
     ###
     # Low-level ops.
@@ -61,6 +59,13 @@ class ArduinoRGBMatrix:
             return (y * (self.width)) + self.width - x - 1
         else:
             return (y * self.width) + x
+
+    def set_comm_port(self, comm_port):
+        if comm_port == 'windows':
+            self.serial = serial.Serial('COM3', 9600)
+        else:
+            self.serial = serial.Serial('/dev/ttyACM0', 9600)
+        time.sleep(1)
 
     ###
     # High Level Ops
