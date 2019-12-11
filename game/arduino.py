@@ -15,11 +15,11 @@ def generate_empty_rgb_matrix(width, height):
 
 class ArduinoRGBMatrix:
 
-    def __init__(self):
+    def __init__(self, serial_path):
         self.width = 60
         self.height = 21
         self.current_state = generate_empty_rgb_matrix(self.width, self.height)
-        self.serial = serial.Serial('/dev/ttyACM0', 9600)
+        self.serial = serial.Serial(serial_path, 9600)
         time.sleep(1)
 
     ###

@@ -44,6 +44,10 @@ parser.add_argument('--matplotlib', action='store_true',
                     help='Enables matplotlib output')
 parser.add_argument('--arduino', action='store_true',
                     help='Enables Arduino output')
+parser.add_argument('--arduino_path',
+                    type=str,
+                    default='/dev/ttyACM0',
+                    help='Arduino serial path')
 parser.add_argument('--nooutput', action='store_true',
                     help='Enables nooutput')
 parser.add_argument('--images', action='store_true',
@@ -62,7 +66,7 @@ clyde_move_factory = ValidRandomWithMomentem()
 pacman_move_factory = ValidRandomWithMomentem()
 
 if args.arduino:
-    arduino_matrix = ArduinoRGBMatrix()
+    arduino_matrix = ArduinoRGBMatrix(args.arduino_path)
     arduino_matrix.clear()
     arduino_matrix.update_by_n_random_pixels(
         generate_board_with_stats(board),
