@@ -7,6 +7,7 @@ class Clyde:
         self._last_location = spawnLocation
         self._current_location = spawnLocation
         self._been_through_gate = False
+        self._has_spawned_fruit = False
 
     def handle_move(self, move):
         proposed_location = self.calculate_move_location(move)
@@ -15,10 +16,10 @@ class Clyde:
             self._last_location = proposed_location
             self._current_location = proposed_location
 
-        if self._game.state[
-                self._current_location[1]][self._current_location[0]] == 0 and self._game.count_nuggets_left() == 110:
-            self._game.state[
-                self._current_location[1]][self._current_location[0]] = 10
+        if not self._has_spawned_fruit and not self._game._is_ghost_mode:
+            if self._game.state[self._current_location[1]][self._current_location[0]] == 0 and self._game.count_nuggets_left() == 100:
+                self._game.state[self._current_location[1]][self._current_location[0]] = 10
+                self._has_spawned_fruit = True
 
         return self._current_location
 
@@ -42,6 +43,6 @@ class Clyde:
 
     def is_valid_location(self, location):
         location = self._game.normalise_coordinates(location)
-        if self._been_through_gate:
+        if self._been_through_gate or self._game._is_ghost_mode:
             return self._game.state[location[1]][location[0]] in [0, 8, 9, 10]
         return self._game.state[location[1]][location[0]] in [0, 7, 8, 9, 10]

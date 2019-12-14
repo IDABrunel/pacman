@@ -9,8 +9,9 @@ RGB_MAPPINGS = {
     7: [128, 128, 128],  # ghostGate
     8: [10, 10, 0],  # nuggets
     9: [255, 255, 255],  # ghost killing nugget
-    10: [34, 139, 34]  # fruit
-
+    10: [34, 139, 34],  # fruit
+    11: [0, 0, 128],  # Ghost Panic One
+    12: [0, 128, 128]  # Ghost Panic Two
 }
 
 
