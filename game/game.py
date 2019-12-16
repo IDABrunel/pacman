@@ -59,14 +59,13 @@ class Game:
 
     def handle_moves(
         self,
-        tick,
         pacman_move,
         blinky_move,
         pinky_move,
         inky_move,
         clyde_move
     ):
-        self._current_tick = tick
+        self._current_tick = self._current_tick + 1
         self.blinky.handle_move(blinky_move)
         self.pinky.handle_move(pinky_move)
         self.inky.handle_move(inky_move)
