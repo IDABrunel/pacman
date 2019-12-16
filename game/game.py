@@ -59,14 +59,13 @@ class Game:
 
     def handle_moves(
         self,
-        tick,
         pacman_move,
         blinky_move,
         pinky_move,
         inky_move,
         clyde_move
     ):
-        self._current_tick = tick
+        self._current_tick = self._current_tick + 1
         self.blinky.handle_move(blinky_move)
         self.pinky.handle_move(pinky_move)
         self.inky.handle_move(inky_move)
@@ -117,8 +116,6 @@ class Game:
     def enable_ghost_mode(self):
         self._is_ghost_mode = True
         self._ghost_caught_at_tick = self._current_tick
-        print("Ghost Mode Enabled at Tick: ", self._current_tick)
-        print(self._ghost_caught_at_tick)
 
     def disable_ghost_mode(self):
         self._is_ghost_mode = False
@@ -179,7 +176,6 @@ class Game:
 
         if self.pacman._current_location in ghost_current_location or self.pacman._last_location in ghost_last_location:
             self.pacman_lives = self.pacman_lives - 1
-            print('Lives left', self.pacman_lives)
             if self.pacman_lives <= 0:
                 self.complete = True
             self.reset_agent_positions()
