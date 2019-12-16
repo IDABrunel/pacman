@@ -12,7 +12,7 @@ model = deepq.learn(
     hiddens=[256],
     dueling=True,
     lr=1e-4,
-    total_timesteps=int(4e7),
+    total_timesteps=int(1e8),
     buffer_size=10000,
     exploration_fraction=0.1,
     exploration_final_eps=0.01,
@@ -22,4 +22,4 @@ model = deepq.learn(
     gamma=0.99
 )
 
-model.save('4e7.0.1.pkl')
+model.save('1e8.0.1.pkl')
