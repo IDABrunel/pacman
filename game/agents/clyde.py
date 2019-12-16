@@ -17,7 +17,7 @@ class Clyde:
             self._current_location = proposed_location
 
         if not self._has_spawned_fruit and not self._game._is_ghost_mode:
-            if self._game.state[self._current_location[1]][self._current_location[0]] == 0 and self._game.count_nuggets_left() == 110:
+            if self._game.state[self._current_location[1]][self._current_location[0]] == 0 and self._game.count_nuggets_left() == 100:
                 self._game.state[self._current_location[1]][self._current_location[0]] = 10
                 self._has_spawned_fruit = True
 
@@ -43,6 +43,6 @@ class Clyde:
 
     def is_valid_location(self, location):
         location = self._game.normalise_coordinates(location)
-        if self._been_through_gate:
+        if self._been_through_gate or self._game._is_ghost_mode:
             return self._game.state[location[1]][location[0]] in [0, 8, 9, 10]
         return self._game.state[location[1]][location[0]] in [0, 7, 8, 9, 10]
