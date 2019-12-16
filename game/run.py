@@ -123,4 +123,4 @@ while board.complete is False:
     if args.images:
         plt.clf()
         plt.imshow(generate_board_with_stats(board))
-        plt.savefig('images/{:04d}.png'.format(i))
+        plt.savefig('images/{:04d}.png'.format(board._current_tick))
