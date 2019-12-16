@@ -101,10 +101,8 @@ if args.images:
     plt.imshow(generate_board_with_stats(board))
     plt.savefig('images/0000.png')
 
-i = 1
 while board.complete is False:
-    print('Tick...' + str(i))
-    current_tick = i
+    print('Tick...' + str(board._current_tick))
     board.handle_moves(
         pacman_move_factory.generate_move(board.pacman),
         blinky_move_factory.generate_move(board.blinky),
@@ -126,5 +124,3 @@ while board.complete is False:
         plt.clf()
         plt.imshow(generate_board_with_stats(board))
         plt.savefig('images/{:04d}.png'.format(i))
-
-    i = i + 1
