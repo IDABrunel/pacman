@@ -70,16 +70,16 @@ inky_move_factory = ValidRandomWithMomentem()
 clyde_move_factory = ValidRandomWithMomentem()
 
 if args.strategy == 'full_random':
-    Game._version_type = 1
+    generate_board_with_stats._version_type = 1
     pacman_move_factory = FullRandom()
 elif args.strategy == 'valid_random':
-    Game._version_type = 2
+    generate_board_with_stats._version_type = 2
     pacman_move_factory = ValidRandom()
 elif args.strategy == 'valid_random_momentem':
-    Game._version_type = 3
+    generate_board_with_stats._version_type = 3
     pacman_move_factory = ValidRandomWithMomentem()
 elif args.strategy == 'user_input':
-    Game._version_type = 4
+    generate_board_with_stats._version_type = 4
     pacman_move_factory = UserInput()
 else:
     raise 'Unknown movmement strategy.'

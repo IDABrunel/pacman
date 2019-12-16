@@ -18,7 +18,6 @@ class Game:
     _current_tick = 0
     _ghost_mode_total_duration_in_ticks = 60
     _ghost_mode_total_flickering_duration_in_ticks = 30
-    _version_type = 3
 
     def normalise_coordinates(self, location):
         x, y = location
@@ -136,9 +135,6 @@ class Game:
         caught_ghosts = ((self._num_time_blinky_caught * 40) + (self._num_time_clyde_caught * 40) + (self._num_time_inky_caught * 40) + (self._num_time_pinky_caught * 40))
 
         return nuggets_score + fruit_score + caught_ghosts
-
-    def version_type_of_pacman(self):
-        return self._version_type
 
     def calculate_board(self):
         current_state = copy.deepcopy(self.state)

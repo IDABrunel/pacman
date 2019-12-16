@@ -3,12 +3,19 @@ from rgb_mapper import board_to_rgb
 import numpy as np
 
 
+_version_type = 3
+
+
 def generate_board_with_stats(board):
     board_m = board.calculate_board()
     board_rgb = np.array(board_to_rgb(board_m))
     stats_rgb = np.array(generate_stats(board)) / 5
 
     return np.vstack((board_rgb, stats_rgb)).astype(int)
+
+
+def generate_version():
+    return _version_type
 
 
 def generate_stats(board):
@@ -18,7 +25,7 @@ def generate_stats(board):
 
     d = ImageDraw.Draw(img)
 
-    d.text((30 - d.textsize(str(board.version_type_of_pacman()))[0], -1), str(board.version_type_of_pacman()), fill=(255, 255, 255))
+    d.text((30 - d.textsize(str(generate_version()))[0], -1), str(generate_version()), fill=(255, 255, 255))
 
     for h in range(0, board.pacman_lives):
         img.paste(heart, (h * 8, 1))
