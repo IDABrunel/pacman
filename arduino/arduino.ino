@@ -12,9 +12,6 @@
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
 #define DELAYVAL 0 // Time (in milliseconds) to pause between pixels
-String inputString = "";
-bool stringComplete = false;
-
 
 void setup() {
 #if defined(__AVR_ATtiny85__) && (F_CPU == 16000000)
@@ -22,32 +19,43 @@ void setup() {
 #endif
 
   pixels.begin();
-  Serial.begin(9600);
-  inputString.reserve(200);
+  Serial.begin(76800);
   pixels.clear();
+  pixels.setPixelColor(0, pixels.Color(255, 0, 0));
+  pixels.show();
 }
 
 void loop() {
   while (Serial.available()) {
-    int op = Serial.readStringUntil(',').toInt();
+    byte opbuf[1];
     
-    if (op == 0) {
-      Serial.readStringUntil('\n');
+    Serial.readBytes(opbuf, 1);
+
+    if (opbuf[0] == 0x00) {
       pixels.clear();
-      Serial.print('E');
-    } else if (op == 1) {
-      int idx = Serial.readStringUntil(',').toInt();
-      int r = Serial.readStringUntil(',').toInt();
-      int g = Serial.readStringUntil(',').toInt();
-      int b = Serial.readStringUntil(',').toInt();
-      Serial.readStringUntil('\n');
+      Serial.write('E');
+    } else if (opbuf[0] == 0x01) {
+      byte showbuf[5];
+
+      Serial.readBytes(showbuf, 5);
+
+      int idx0 = showbuf[0];
+      int idx1 = showbuf[1];
+      int idx = idx0;
+      idx = (idx << 8) | idx1;
+
+
+      
+      int r = showbuf[2];
+      int g = showbuf[3];
+      int b = showbuf[4];
+    
       pixels.setPixelColor(idx, pixels.Color(r, g, b));
-      Serial.print('E');
-    } else if (op == 2) {
+      Serial.write('E');
+    } else if (opbuf[0] == 0x02) {
       // publish
-      Serial.readStringUntil('\n');
       pixels.show();
-      Serial.print('E');
+      Serial.write('E');
     }    
   }
  

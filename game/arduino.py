@@ -1,5 +1,6 @@
 import serial
 import time
+import struct
 from random import shuffle
 
 
@@ -19,7 +20,7 @@ class ArduinoRGBMatrix:
         self.width = 60
         self.height = 21
         self.current_state = generate_empty_rgb_matrix(self.width, self.height)
-        self.serial = serial.Serial(serial_path, 9600)
+        self.serial = serial.Serial(serial_path, 76800)
         time.sleep(1)
 
     ###
@@ -27,32 +28,31 @@ class ArduinoRGBMatrix:
     ###
 
     def send_batch_ops(self, op_arrs):
-        ops_str = ''
+        opsbatch = bytes()
 
-        for op_arr in op_arrs:
-            op_str = ''
+        for opp in op_arrs:
+            for i in opp:
+                if (type(i) == bytes):
+                    opsbatch += i
+                else:
+                    opsbatch += bytes([int(i)])
 
-            for i in op_arr:
-                op_str = op_str + str(i) + ','
+        self.serial.write(opsbatch)
 
-            ops_str = ops_str + op_str + '\n'
-
-        self.serial.write(bytes(ops_str, 'ascii'))
-
-        for _ in op_arrs:
-            self.serial.read_until(b'E')
+        for _ in range(0, len(op_arrs)):
+            self.serial.read_until(bytes("E".encode('utf-8')))
 
     def send_op(self, op_arr):
         self.send_batch_ops([op_arr])
 
     def op_clear(self):
-        return [0]
+        return [0x00]
 
     def op_set(self, iloc, r, g, b):
-        return [1, iloc, r, g, b]
+        return [0x01, struct.pack('>h', iloc), r, g, b]
 
     def op_show(self):
-        return [2]
+        return [0x02]
 
     def location_to_iloc(self, location):
         [x, y] = location
