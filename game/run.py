@@ -3,9 +3,8 @@ import argparse
 from matplotlib import pyplot as plt
 from game import Game
 from arduino import ArduinoRGBMatrix
-from moves import FullRandom, ValidRandom, ValidRandomWithMomentem, UserInput
 from results_display import generate_board_with_stats
-
+from moves.rand import ValidRandomWithMomentem
 
 INIT_BOARD_STATE = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -70,13 +69,17 @@ inky_move_factory = ValidRandomWithMomentem()
 clyde_move_factory = ValidRandomWithMomentem()
 
 if args.strategy == 'full_random':
+    from moves.rand import FullRandom
     pacman_move_factory = FullRandom()
 elif args.strategy == 'valid_random':
+    from moves.rand import ValidRandom
     pacman_move_factory = ValidRandom()
 elif args.strategy == 'valid_random_momentem':
+    from moves.rand import ValidRandomWithMomentem
     pacman_move_factory = ValidRandomWithMomentem()
 elif args.strategy == 'user_input':
-    pacman_move_factory = UserInput()
+    from moves.console import ConsoleInput
+    pacman_move_factory = ConsoleInput()
 else:
     raise 'Unknown movmement strategy.'
 
