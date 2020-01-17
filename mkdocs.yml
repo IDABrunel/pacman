@@ -1,0 +1,9 @@
+site_name: Pacman
+theme: readthedocs
+nav:
+    - Welcome: index.md
+    - Setup:
+        - Gettings Started: Getting Started.md
+        - Running Pacman: Running Pacman.md
+    - Develop:
+        - Movement Strategy: Development.md
