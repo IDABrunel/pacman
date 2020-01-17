@@ -39,6 +39,10 @@ board = Game(
 
 
 parser = argparse.ArgumentParser()
+parser.add_argument('--style',
+                    type=str,
+                    default='default',
+                    help='Style to use')
 parser.add_argument('--matplotlib', action='store_true',
                     help='Enables matplotlib output')
 parser.add_argument('--arduino', action='store_true',
@@ -91,21 +95,23 @@ if args.arduino:
     arduino_matrix = ArduinoRGBMatrix(args.arduino_path)
     arduino_matrix.clear()
     arduino_matrix.update_by_n_random_pixels(
-        generate_board_with_stats(board),
+        generate_board_with_stats(board, args.style),
         50
     )
 
 if args.matplotlib:
     plt.ion()
     plt.clf()
-    plt.imshow(generate_board_with_stats(board))
+    plt.imshow(generate_board_with_stats(board, args.style))
+    plt.axis('off')
     plt.show()
     plt.pause(0.05)
 
 if args.images:
     plt.clf()
-    plt.imshow(generate_board_with_stats(board))
-    plt.savefig('images/0000.png')
+    plt.imshow(generate_board_with_stats(board, args.style))
+    plt.axis('off')
+    plt.savefig('images/0000.png', bbox_inches='tight')
 
 while board.complete is False:
     print('Tick...' + str(board._current_tick))
@@ -118,15 +124,17 @@ while board.complete is False:
     )
 
     if args.arduino:
-        arduino_matrix.update(generate_board_with_stats(board))
+        arduino_matrix.update(generate_board_with_stats(board, args.style))
 
     if args.matplotlib:
         plt.clf()
-        plt.imshow(generate_board_with_stats(board))
+        plt.imshow(generate_board_with_stats(board, args.style))
+        plt.axis('off')
         plt.show()
         plt.pause(0.05)
 
     if args.images:
         plt.clf()
-        plt.imshow(generate_board_with_stats(board))
-        plt.savefig('images/{:04d}.png'.format(board._current_tick))
+        plt.imshow(generate_board_with_stats(board, args.style))
+        plt.axis('off')
+        plt.savefig('images/{:04d}.png'.format(board._current_tick), bbox_inches='tight')
