@@ -53,7 +53,7 @@ parser.add_argument('--images', action='store_true',
                     help='Saves each figure to ./images/xxxx.png')
 parser.add_argument('--strategy',
                     type=str,
-                    choices=['full_random', 'valid_random', 'valid_random_momentem', 'user_input'],
+                    choices=['full_random', 'valid_random', 'valid_random_momentem', 'user_input', 'controller'],
                     default='valid_random_momentem',
                     help='Pacman move strategy')
 
@@ -80,6 +80,9 @@ elif args.strategy == 'valid_random_momentem':
 elif args.strategy == 'user_input':
     from moves.console import ConsoleInput
     pacman_move_factory = ConsoleInput()
+elif args.strategy == 'controller':
+    from moves.controller import Controler
+    pacman_move_factory = Controler()
 else:
     raise 'Unknown movmement strategy.'
 
