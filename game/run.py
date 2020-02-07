@@ -5,6 +5,7 @@ from game import Game
 from arduino import ArduinoRGBMatrix
 from results_display import generate_board_with_stats
 from moves.rand import ValidRandomWithMomentem
+from moves.smartghost import SmartGhost
 
 INIT_BOARD_STATE = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -68,7 +69,7 @@ if len(sys.argv[1:]) == 0:
 args = parser.parse_args()
 
 blinky_move_factory = ValidRandomWithMomentem()
-pinky_move_factory = ValidRandomWithMomentem()
+pinky_move_factory = SmartGhost()
 inky_move_factory = ValidRandomWithMomentem()
 clyde_move_factory = ValidRandomWithMomentem()
 
