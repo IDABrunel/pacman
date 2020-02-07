@@ -1,7 +1,9 @@
+import math
 import numpy as np
 from pathfinding.core.diagonal_movement import DiagonalMovement
 from pathfinding.core.grid import Grid
 from pathfinding.finder.a_star import AStarFinder
+from .rand import ValidRandom
 
 def bool_to_int(val):
     return 1 if val == True else 0
@@ -17,6 +19,12 @@ class SmartGhost:
 
         agent_location = agent._current_location
         pacman_location = agent._game.pacman._current_location
+
+
+        dist = math.sqrt(pow(agent_location[0] - pacman_location[0], 2) + pow(agent_location[1] - pacman_location[1], 2))
+        
+        if dist > 6:
+            return ValidRandom().generate_move(agent)
 
         start = grid.node(agent_location[0], agent_location[1])
         end = grid.node(pacman_location[0],pacman_location[1])
