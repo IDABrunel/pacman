@@ -1,27 +1,21 @@
-RGB_MAPPINGS = {
-    0: [0, 0, 0],  # space
-    1: [0, 0, 50],  # wall
-    2: [255, 193, 7],  # pacman
-    3: [244, 67, 54],  # blinky
-    4: [233, 30, 30],  # pinky
-    5: [0, 188, 212],  # inky
-    6: [255, 87, 34],  # clyde
-    7: [128, 128, 128],  # ghostGate
-    8: [10, 10, 0],  # nuggets
-    9: [255, 255, 255],  # ghost killing nugget
-    10: [34, 139, 34],  # fruit
-    11: [0, 0, 128],  # Ghost Panic One
-    12: [0, 128, 128]  # Ghost Panic Two
-}
+import importlib
 
 
-def id_to_rgb(id):
-    return RGB_MAPPINGS[id]
+def id_to_rgb(id, style='default'):
+    return importlib.import_module('styles.' + style).STYLE[id]
 
 
-def id_array_to_rgb_array(arr):
-    return list(map(id_to_rgb, arr))
+def id_array_to_rgb_array(arr, style='default'):
+
+    def id_to_rgb_with_style(arr):
+        return id_to_rgb(arr, style)
+
+    return list(map(id_to_rgb_with_style, arr))
 
 
-def board_to_rgb(calculated_board):
-    return list(map(id_array_to_rgb_array, calculated_board))
+def board_to_rgb(calculated_board, style='default'):
+
+    def id_array_to_rgb_array_with_style(arr):
+        return id_array_to_rgb_array(arr, style)
+
+    return list(map(id_array_to_rgb_array_with_style, calculated_board))
