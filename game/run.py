@@ -29,6 +29,8 @@ INIT_CLYDE_LOCATION = [26, 7]
 
 INIT_PACMAN_LOCATION = [26, 10]
 
+_version_type = 0
+
 board = Game(
     INIT_BOARD_STATE,
     INIT_PACMAN_LOCATION,
@@ -70,16 +72,16 @@ inky_move_factory = ValidRandomWithMomentem()
 clyde_move_factory = ValidRandomWithMomentem()
 
 if args.strategy == 'full_random':
-    generate_board_with_stats._version_type = 1
+    _version_type = 1
     pacman_move_factory = FullRandom()
 elif args.strategy == 'valid_random':
-    generate_board_with_stats._version_type = 2
+    _version_type = 2
     pacman_move_factory = ValidRandom()
 elif args.strategy == 'valid_random_momentem':
-    generate_board_with_stats._version_type = 3
+    _version_type = 3
     pacman_move_factory = ValidRandomWithMomentem()
 elif args.strategy == 'user_input':
-    generate_board_with_stats._version_type = 4
+    _version_type = 4
     pacman_move_factory = UserInput()
 else:
     raise 'Unknown movmement strategy.'
@@ -89,20 +91,20 @@ if args.arduino:
     arduino_matrix = ArduinoRGBMatrix(args.arduino_path)
     arduino_matrix.clear()
     arduino_matrix.update_by_n_random_pixels(
-        generate_board_with_stats(board),
+        generate_board_with_stats(board, _version_type),
         50
     )
 
 if args.matplotlib:
     plt.ion()
     plt.clf()
-    plt.imshow(generate_board_with_stats(board))
+    plt.imshow(generate_board_with_stats(board, _version_type))
     plt.show()
     plt.pause(0.05)
 
 if args.images:
     plt.clf()
-    plt.imshow(generate_board_with_stats(board))
+    plt.imshow(generate_board_with_stats(board, _version_type))
     plt.savefig('images/0000.png')
 
 while board.complete is False:
@@ -116,15 +118,15 @@ while board.complete is False:
     )
 
     if args.arduino:
-        arduino_matrix.update(generate_board_with_stats(board))
+        arduino_matrix.update(generate_board_with_stats(board, _version_type))
 
     if args.matplotlib:
         plt.clf()
-        plt.imshow(generate_board_with_stats(board))
+        plt.imshow(generate_board_with_stats(board, _version_type))
         plt.show()
         plt.pause(0.05)
 
     if args.images:
         plt.clf()
-        plt.imshow(generate_board_with_stats(board))
+        plt.imshow(generate_board_with_stats(board, _version_type))
         plt.savefig('images/{:04d}.png'.format(board._current_tick))
