@@ -3,9 +3,10 @@ import argparse
 from matplotlib import pyplot as plt
 from game import Game
 from arduino import ArduinoRGBMatrix
-from moves import FullRandom, ValidRandom, ValidRandomWithMomentem, UserInput
 from results_display import generate_board_with_stats
-
+from moves.rand import FullRandom, ValidRandom, ValidRandomWithMomentem
+from moves.console import ConsoleInput
+from moves.controller import Controler
 
 INIT_BOARD_STATE = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -18,7 +19,7 @@ INIT_BOARD_STATE = [
     [1, 8, 0, 9, 1, 8, 0, 8, 0, 8, 0, 1, 1, 8, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 8, 1, 8, 0, 8, 1, 8, 0, 8, 0, 0, 0, 1, 0, 1, 1, 1, 1, 8, 1, 1, 0, 1, 0, 8, 0, 1],
     [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 8, 0, 8, 0, 8, 0, 8, 1, 0, 1, 8, 1, 8, 1, 8, 1, 0, 1, 8, 1, 8, 1, 1, 0, 1, 0, 8, 0, 1, 0, 8, 0, 1, 1, 8, 1, 8, 0, 8, 0, 8, 0, 1, 0, 8, 0, 9, 0, 8, 1],
     [1, 8, 1, 8, 1, 8, 1, 8, 1, 8, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 8, 1, 8, 1, 1, 1, 8, 1, 1, 1, 8, 1, 1, 0, 1, 0, 1, 1, 1, 1, 8, 1, 8, 1, 1, 1, 1, 0, 1],
-    [1, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 1],
+    [1, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 0, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 0, 8, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ]
 
@@ -42,6 +43,10 @@ board = Game(
 
 
 parser = argparse.ArgumentParser()
+parser.add_argument('--style',
+                    type=str,
+                    default='default',
+                    help='Style to use')
 parser.add_argument('--matplotlib', action='store_true',
                     help='Enables matplotlib output')
 parser.add_argument('--arduino', action='store_true',
@@ -56,7 +61,7 @@ parser.add_argument('--images', action='store_true',
                     help='Saves each figure to ./images/xxxx.png')
 parser.add_argument('--strategy',
                     type=str,
-                    choices=['full_random', 'valid_random', 'valid_random_momentem', 'user_input'],
+                    choices=['full_random', 'valid_random', 'valid_random_momentem', 'user_input', 'controller'],
                     default='valid_random_momentem',
                     help='Pacman move strategy')
 
@@ -82,7 +87,10 @@ elif args.strategy == 'valid_random_momentem':
     pacman_move_factory = ValidRandomWithMomentem()
 elif args.strategy == 'user_input':
     _version_type = 4
-    pacman_move_factory = UserInput()
+    pacman_move_factory = ConsoleInput()
+elif args.strategy == 'controller':
+    _version_type = 5
+    pacman_move_factory = Controler()
 else:
     raise 'Unknown movmement strategy.'
 
@@ -91,21 +99,23 @@ if args.arduino:
     arduino_matrix = ArduinoRGBMatrix(args.arduino_path)
     arduino_matrix.clear()
     arduino_matrix.update_by_n_random_pixels(
-        generate_board_with_stats(board, _version_type),
+        generate_board_with_stats(board, _version_type, args.style),
         50
     )
 
 if args.matplotlib:
     plt.ion()
     plt.clf()
-    plt.imshow(generate_board_with_stats(board, _version_type))
+    plt.imshow(generate_board_with_stats(board, _version_type, args.style))
+    plt.axis('off')
     plt.show()
     plt.pause(0.05)
 
 if args.images:
     plt.clf()
-    plt.imshow(generate_board_with_stats(board, _version_type))
-    plt.savefig('images/0000.png')
+    plt.imshow(generate_board_with_stats(board, _version_type, args.style))
+    plt.axis('off')
+    plt.savefig('images/0000.png', bbox_inches='tight')
 
 while board.complete is False:
     print('Tick...' + str(board._current_tick))
@@ -118,15 +128,17 @@ while board.complete is False:
     )
 
     if args.arduino:
-        arduino_matrix.update(generate_board_with_stats(board, _version_type))
+        arduino_matrix.update(generate_board_with_stats(board, _version_type, args.style))
 
     if args.matplotlib:
         plt.clf()
-        plt.imshow(generate_board_with_stats(board, _version_type))
+        plt.imshow(generate_board_with_stats(board, _version_type, args.style))
+        plt.axis('off')
         plt.show()
         plt.pause(0.05)
 
     if args.images:
         plt.clf()
-        plt.imshow(generate_board_with_stats(board, _version_type))
-        plt.savefig('images/{:04d}.png'.format(board._current_tick))
+        plt.imshow(generate_board_with_stats(board, _version_type, args.style))
+        plt.axis('off')
+        plt.savefig('images/{:04d}.png'.format(board._current_tick), bbox_inches='tight')
