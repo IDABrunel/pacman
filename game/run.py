@@ -28,16 +28,6 @@ INIT_CLYDE_LOCATION = [26, 7]
 
 INIT_PACMAN_LOCATION = [26, 10]
 
-board = Game(
-    INIT_BOARD_STATE,
-    INIT_PACMAN_LOCATION,
-    INIT_BLINKY_LOCATION,
-    INIT_PINKY_LOCATION,
-    INIT_INKY_LOCATION,
-    INIT_CLYDE_LOCATION
-)
-
-
 parser = argparse.ArgumentParser()
 parser.add_argument('--style',
                     type=str,
@@ -55,6 +45,8 @@ parser.add_argument('--nooutput', action='store_true',
                     help='Enables nooutput')
 parser.add_argument('--images', action='store_true',
                     help='Saves each figure to ./images/xxxx.png')
+parser.add_argument('--logging', action='store_true',
+                    help='Enables Logging')
 parser.add_argument('--strategy',
                     type=str,
                     choices=['full_random', 'valid_random', 'valid_random_momentem', 'user_input', 'controller'],
@@ -66,6 +58,16 @@ if len(sys.argv[1:]) == 0:
     parser.exit()
 
 args = parser.parse_args()
+
+board = Game(
+    INIT_BOARD_STATE,
+    INIT_PACMAN_LOCATION,
+    INIT_BLINKY_LOCATION,
+    INIT_PINKY_LOCATION,
+    INIT_INKY_LOCATION,
+    INIT_CLYDE_LOCATION,
+    logging_enabled=args.logging
+)
 
 blinky_move_factory = ValidRandomWithMomentem()
 pinky_move_factory = ValidRandomWithMomentem()
