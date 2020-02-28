@@ -10,7 +10,7 @@ def generate_board_with_stats(board, _version_type, style='default'):
     if STYLE['STATS_ENABLED']:
         board_m = board.calculate_board()
         board_rgb = np.array(board_to_rgb(board_m, style))
-        stats_rgb = np.array(generate_stats(board, style, _version_type)) / STYLE['STATS_REDUCER']
+        stats_rgb = np.array(generate_stats(board, _version_type, style)) / STYLE['STATS_REDUCER']
 
         return np.vstack((board_rgb, stats_rgb)).astype(int)
     else:
