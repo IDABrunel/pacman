@@ -13,11 +13,15 @@ class Logger:
         self._game = game
         Path(output_dir).mkdir(exist_ok=True, parents=True)
         self.log_path = output_dir / file_name
-        self.log = []
         self.log_initial_state()
 
+    def write(self, log_type, log):
+        json.dump([log_type, log], open(self.log_path, 'a'))
+        with open(self.log_path, 'a') as f:
+            f.write('\n')
+
     def log_initial_state(self):
-        self.log.append({
+        self.write('initial', {
             "state": self._game.state,
             "blinky_location": self._game.blinky._current_location,
             "pinky_location": self._game.pinky._current_location,
@@ -26,10 +30,9 @@ class Logger:
             "pacman_location": self._game.pacman._current_location,
             "pacman_lives": self._game.pacman_lives
         })
-        self.save()
 
     def log_move(self, pacman_move, blinky_move, pinky_move, inky_move, clyde_move):
-        self.log.append({
+        self.write('tick', {
             "state": self._game.state,
             "blinky_move": blinky_move,
             "blinky_location": self._game.blinky._current_location,
@@ -43,8 +46,3 @@ class Logger:
             "pacman_location": self._game.pacman._current_location,
             "pacman_lives": self._game.pacman_lives
         })
-        self.save()
-        pass
-
-    def save(self):
-        json.dump(self.log, open(self.log_path, 'w'))
