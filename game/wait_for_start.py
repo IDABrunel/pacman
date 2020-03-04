@@ -88,6 +88,7 @@ class Controler:
             if evbuf:
                 self.buf_to_direction(evbuf)
 
+
 c = Controler()
-while(c.startpress == False):
+while(c.startpress is False):
     c.input_listener_thread.close()
