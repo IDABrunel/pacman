@@ -33,9 +33,10 @@ class TextWriter:
 
         return img
 
+if __name__ == '__main__':
 
-st = TextWriter(sys.argv[1], 60, 21)
+    st = TextWriter(sys.argv[1], 60, 21)
 
-board = ArduinoRGBMatrix()
+    board = ArduinoRGBMatrix()
 
-board.update(np.array(st.generate()))
+    board.update(np.array(st.generate()))

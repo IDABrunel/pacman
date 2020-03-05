@@ -3,6 +3,13 @@ import array
 import sys
 from fcntl import ioctl
 from threading import Thread
+from arduino import ArduinoRGBMatrix
+from write_text import TextWriter
+import numpy as np
+
+st = TextWriter('Press Start', 60, 21)
+board = ArduinoRGBMatrix(serial_path='/dev/ttyACM0')
+board.update(np.array(st.generate()))
 
 axis_names = {
     0x00: 'x',
