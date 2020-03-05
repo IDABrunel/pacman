@@ -34,9 +34,9 @@ class ScrollingText:
         return img
 
 
-st = ScrollingText(sys.argv[1], 60, 21)
+#st = ScrollingText(sys.argv[1], 60, 21)
 
-board = ArduinoRGBMatrix()
+#board = ArduinoRGBMatrix(serial_path='/dev/ttyACM0')
 
-while True:
-    board.update(np.array(st.generate()))
+#while True:
+#    board.update(np.array(st.generate()))
