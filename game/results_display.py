@@ -28,7 +28,7 @@ def generate_stats(board, _version_type, style='default'):
 
     d = ImageDraw.Draw(img)
 
-    d.text((30 - d.textsize(str(_version_type))[0], -1), str(_version_type), fill=(255, 255, 255))
+    d.text((30 - d.textsize(str(_version_type))[0], -1), str(_version_type), fill=STYLE['STATS_TEXT'])
 
     for h in range(0, board.pacman_lives):
         img.paste(heart, (h * 8, 1), mask=heart)
