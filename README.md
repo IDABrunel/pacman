@@ -4,7 +4,7 @@
 
 Python matrix Pacman environment for teaching and experimentation in Programming, Algorithms and Machine Learning.
 
-Developed by Doctoral Researchers at Brunel University London as part of a cross-disciplinary experiment. 
+Developed by Doctoral Researchers at Brunel University London as part of a cross-disciplinary experiment.
 
 ## Features
 
@@ -16,7 +16,7 @@ Developed by Doctoral Researchers at Brunel University London as part of a cross
 
 ## Getting Started
 
-If you're unfamiliar with Git and Python then we reccomend following the [Getting Started](https://github.com/bencevans/pacman) guide in the documentation. Otherwise the following will probably be suffice.
+If you're unfamiliar with Git and Python then we recommend following the [Getting Started](https://github.com/bencevans/pacman) guide in the documentation. Otherwise the following will probably be suffice.
 
     $ git clone git@github.com:bencevans/pacman.git
     $ cd pacman/game
