@@ -1,3 +1,6 @@
+import time
+import signal
+import os
 import sys
 import argparse
 from matplotlib import pyplot as plt
@@ -101,6 +104,8 @@ if args.arduino:
         50
     )
 
+print(arduino_matrix)
+
 if args.matplotlib:
     plt.ion()
     plt.clf()
@@ -140,3 +145,6 @@ while board.complete is False:
         plt.imshow(generate_board_with_stats(board, args.style))
         plt.axis('off')
         plt.savefig('images/{:04d}.png'.format(board._current_tick), bbox_inches='tight')
+
+time.sleep(10)
+os.kill(os.getpid(), signal.SIGKILL)

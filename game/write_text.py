@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 import sys
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 from arduino import ArduinoRGBMatrix
 import numpy as np
+
+font = ImageFont.truetype('/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf', 9)
 
 
 class TextWriter:
@@ -18,13 +20,13 @@ class TextWriter:
     def calculate_text_dimentions(self):
         img = Image.new('RGB', (self.image_width, self.image_height), color=(73, 109, 137))
         d = ImageDraw.Draw(img)
-        return d.textsize(self.text)
+        return d.textsize(self.text, font)
 
     def generate(self):
         img = Image.new('RGB', (self.image_width, self.image_height), color=(0, 0, 0))
         d = ImageDraw.Draw(img)
 
-        d.text(((self.image_width - self.text_width) / 2, 0), self.text, fill=(100, 100, 0))
+        d.text(((self.image_width - self.text_width) / 2, 4), self.text, fill=(100, 100, 0), font=font)
 
         self.text_x = self.text_x - 1
 
@@ -34,8 +36,10 @@ class TextWriter:
         return img
 
 
-st = TextWriter(sys.argv[1], 60, 21)
+if __name__ == '__main__':
 
-board = ArduinoRGBMatrix()
+    st = TextWriter(sys.argv[1], 60, 21)
 
-board.update(np.array(st.generate()))
+    board = ArduinoRGBMatrix()
+
+    board.update(np.array(st.generate()))
