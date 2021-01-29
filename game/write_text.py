@@ -6,6 +6,7 @@ import numpy as np
 
 font = ImageFont.truetype('/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf', 9)
 
+
 class TextWriter:
     def __init__(self, text, width, height):
         self.image_width = width
@@ -33,6 +34,7 @@ class TextWriter:
             self.text_x = self.image_width
 
         return img
+
 
 if __name__ == '__main__':
 

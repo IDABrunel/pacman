@@ -1,3 +1,6 @@
+import time
+import signal
+import os
 import sys
 import argparse
 from matplotlib import pyplot as plt
@@ -142,9 +145,6 @@ while board.complete is False:
         plt.imshow(generate_board_with_stats(board, args.style))
         plt.axis('off')
         plt.savefig('images/{:04d}.png'.format(board._current_tick), bbox_inches='tight')
-import os
-import signal
-import time
 
 time.sleep(10)
 os.kill(os.getpid(), signal.SIGKILL)

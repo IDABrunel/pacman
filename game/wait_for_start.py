@@ -5,19 +5,7 @@ from fcntl import ioctl
 from threading import Thread
 from arduino import ArduinoRGBMatrix
 from write_text import TextWriter
-from scrolling_text import ScrollingText
 import numpy as np
-from threading import Thread
-
-#def scroller():
-#    st = ScrollingText('Press Start', 60, 21)
-#    board = ArduinoRGBMatrix(serial_path='/dev/ttyACM0')
-
-#    while True:
-#        board.update(np.array(st.generate()))
-
-#scroller_thread = Thread(target=scroller)
-#scroller_thread.start()
 
 st = TextWriter('Press Start', 60, 21)
 board = ArduinoRGBMatrix(serial_path='/dev/ttyACM0')

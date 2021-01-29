@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-import sys
 from PIL import Image, ImageDraw
-from arduino import ArduinoRGBMatrix
-import numpy as np
 
 
 class ScrollingText:
@@ -34,9 +31,9 @@ class ScrollingText:
         return img
 
 
-#st = ScrollingText(sys.argv[1], 60, 21)
+# st = ScrollingText(sys.argv[1], 60, 21)
 
-#board = ArduinoRGBMatrix(serial_path='/dev/ttyACM0')
+# board = ArduinoRGBMatrix(serial_path='/dev/ttyACM0')
 
-#while True:
+# while True:
 #    board.update(np.array(st.generate()))
