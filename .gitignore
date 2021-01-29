@@ -5,3 +5,5 @@ package-lock.json
 __pycache__
 images/
 *.gif
+.logs
+logs/
