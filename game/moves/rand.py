@@ -32,8 +32,3 @@ class ValidRandomWithMomentem:
         self.last_move = ValidRandom().generate_move(agent)
 
         return self.last_move
-
-
-class UserInput:
-    def generate_move(self, _):
-        return input("Direction U/D/L/R: ")

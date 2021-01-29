@@ -1,5 +1,7 @@
 import copy
 
+from logger import Logger
+
 from agents.blinky import Blinky
 from agents.pinky import Pinky
 from agents.inky import Inky
@@ -46,7 +48,8 @@ class Game:
         blinky_current_location,
         pinky_current_location,
         inky_current_location,
-        clyde_current_location
+        clyde_current_location,
+        logging_enabled=False
     ):
         self.state = board_state
         self.blinky = Blinky(self, blinky_current_location)
@@ -56,6 +59,10 @@ class Game:
         self.pacman = Pacman(self, pacman_current_location)
         self.pacman_lives = 3
         self._initial_total_nuggets_on_board = self.count_nuggets_left()
+
+        self.logging_enabled = logging_enabled
+        if self.logging_enabled:
+            self.logger = Logger(game=self)
 
     def handle_moves(
         self,
@@ -71,6 +78,9 @@ class Game:
         self.inky.handle_move(inky_move)
         self.clyde.handle_move(clyde_move)
         self.pacman.handle_move(pacman_move)
+
+        if self.logging_enabled:
+            self.logger.log_move(pacman_move, blinky_move, pinky_move, inky_move, clyde_move)
 
         nuggets_left = self.count_nuggets_left()
 
