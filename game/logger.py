@@ -44,5 +44,6 @@ class Logger:
             "clyde_location": self._game.clyde._current_location,
             "pacman_move": pacman_move,
             "pacman_location": self._game.pacman._current_location,
-            "pacman_lives": self._game.pacman_lives
+            "pacman_lives": self._game.pacman_lives,
+            "score": self._game.calc_score()
         })
