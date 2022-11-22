@@ -93,7 +93,7 @@ class ArduinoRGBMatrix:
         changes_from_current_state = self.calculate_diff(rgb_matrix)
         shuffle(changes_from_current_state)
 
-        while(len(changes_from_current_state) > 0):
+        while len(changes_from_current_state) > 0:
             x = n if n < len(changes_from_current_state) else len(
                 changes_from_current_state)
             ops = []

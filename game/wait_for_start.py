@@ -98,5 +98,5 @@ class Controler:
 
 
 c = Controler()
-while(c.startpress is False):
+while c.startpress is False:
     c.input_listener_thread.close()
