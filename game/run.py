@@ -105,8 +105,6 @@ if args.arduino:
         50
     )
 
-print(arduino_matrix)
-
 if args.matplotlib:
     plt.ion()
     plt.clf()
