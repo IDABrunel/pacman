@@ -11,6 +11,7 @@ from agents.pacman import Pacman
 
 class Game:
     complete = False
+    _is_scatter_mode=True
     _is_ghost_mode = False
     _num_time_blinky_caught = 0
     _num_time_clyde_caught = 0
@@ -18,6 +19,7 @@ class Game:
     _num_time_pinky_caught = 0
     _ghost_caught_at_tick = 0
     _current_tick = 0
+    _cooldown_tick = 0
     _ghost_mode_total_duration_in_ticks = 60
     _ghost_mode_total_flickering_duration_in_ticks = 30
 
@@ -73,6 +75,17 @@ class Game:
         clyde_move
     ):
         self._current_tick = self._current_tick + 1
+        self._cooldown_tick = self._cooldown_tick + 1
+        counter = self._current_tick
+        sub_counter = 0
+        if counter % 28 < 7:
+            self._is_scatter_mode=True
+        elif counter % 28 < 27:
+            if sub_counter % 20 == 0:
+                self._is_scatter_mode=False
+            sub_counter += 1
+        else:
+            sub_counter = 0
         self.blinky.handle_move(blinky_move)
         self.pinky.handle_move(pinky_move)
         self.inky.handle_move(inky_move)
@@ -186,6 +199,7 @@ class Game:
 
         if self.pacman._current_location in ghost_current_location or self.pacman._last_location in ghost_last_location:
             self.pacman_lives = self.pacman_lives - 1
+            self._cooldown_tick = 0
             if self.pacman_lives <= 0:
                 self.complete = True
             self.reset_agent_positions()

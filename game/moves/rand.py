@@ -28,7 +28,7 @@ class ValidRandomWithMomentem:
             )
         ):
             return self.last_move
-
+        
         self.last_move = ValidRandom().generate_move(agent)
 
         return self.last_move

@@ -25,8 +25,8 @@ class SmartGhost:
 
         dist = math.sqrt(pow(agent_location[0] - pacman_location[0], 2) + pow(agent_location[1] - pacman_location[1], 2))
 
-        if dist > 6:
-            return ValidRandom().generate_move(agent)
+        # if dist > 6:
+            # return ValidRandom().generate_move(agent)
 
         start = grid.node(agent_location[0], agent_location[1])
         end = grid.node(pacman_location[0], pacman_location[1])
