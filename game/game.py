@@ -1,4 +1,5 @@
 import copy
+import random
 
 from logger import Logger
 
@@ -86,6 +87,7 @@ class Game:
             sub_counter += 1
         else:
             sub_counter = 0
+        
         self.blinky.handle_move(blinky_move)
         self.pinky.handle_move(pinky_move)
         self.inky.handle_move(inky_move)
@@ -152,12 +154,34 @@ class Game:
 
     def calculate_board(self):
         current_state = copy.deepcopy(self.state)
-        current_state[self.blinky._current_location[1]][self.blinky._current_location[0]] = self.blinky.id
-        current_state[self.pinky._current_location[1]][self.pinky._current_location[0]] = self.pinky.id
-        current_state[self.inky._current_location[1]][self.inky._current_location[0]] = self.inky.id
-        current_state[self.clyde._current_location[1]][self.clyde._current_location[0]] = self.clyde.id
+        
         current_state[self.pacman._current_location[1]][self.pacman._current_location[0]] = self.pacman.id
 
+        agent_locations = [
+            (self.blinky, tuple(self.blinky._current_location)),
+            (self.pinky, tuple(self.pinky._current_location)),
+            (self.inky, tuple(self.inky._current_location)),
+            (self.clyde, tuple(self.clyde._current_location))
+        ]
+
+        coordinate_counts = {}
+        for agent, location in agent_locations:
+            if location in coordinate_counts:
+                coordinate_counts[location].append(agent)
+            else:
+                coordinate_counts[location] = [agent]
+
+
+        for location, agents in coordinate_counts.items():
+            if len(agents) > 1:
+                random.shuffle(agents)
+                x, y = location
+                current_state[y][x] = agents[0].id
+            else:
+                x, y = location
+                current_state[y][x] = agents[0].id
+
+            
         return current_state
 
     def change_all_ghost_id(self, new_id):
