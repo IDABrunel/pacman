@@ -18,146 +18,79 @@ class PinkyMoves:
     last_move = ''
 
     def generate_move(self, agent):
-
-        if not agent._game._is_ghost_mode:
+        if agent._game._is_ghost_mode:
+            # Terrified Ghost Mode
+            target_location = (58, 1)
+        else:
+            # Scatter or Chase Mode
             if agent._game._is_scatter_mode:
                 # Scatter Mode
-                if (
-                    (self.last_move != '') and agent.is_valid_location(
-                        agent.calculate_move_location(self.last_move)
-                    )
-                ):
-                    return self.last_move
-                else:
-                    self.last_move = ValidRandom().generate_move(agent)
-                    return self.last_move
+                target_location = agent.calculate_move_location(self.last_move)
+                if not agent.is_valid_location(target_location):
+                    target_location = agent._current_location
             else:
-                if agent._game._cooldown_tick > 100:
-                    # Chase Mode
-                    agent_location = agent._current_location
+                # Chase Mode
+                if agent._game._cooldown_tick <= 100:
+                    target_location = agent.calculate_move_location(self.last_move)
+                    if not agent.is_valid_location(target_location):
+                        target_location = agent._current_location
+                else:
                     pacman_location = agent._game.pacman._current_location
+                    target_location = (pacman_location[0], pacman_location[1])
 
-                    matrix = list(map(map_list_bool_to_int, np.array(agent._game.state) != 1))
-
-                    grid = Grid(matrix=matrix)
-
-                    start = grid.node(agent_location[0], agent_location[1])
-
-                    if agent._game.pacman._move_direction == 'U':
-                        if grid.walkable(pacman_location[0], pacman_location[1] + 4):
-                            end = grid.node(pacman_location[0], pacman_location[1] + 4)
-                        else:
-                            end = random.choice(grid.neighbors(grid.node(pacman_location[0], pacman_location[1])))
-                    elif agent._game.pacman._move_direction == 'D':
-                        if grid.walkable(pacman_location[0], pacman_location[1] - 4):
-                            end = grid.node(pacman_location[0], pacman_location[1] - 4)
-                        else:
-                            end = random.choice(grid.neighbors(grid.node(pacman_location[0], pacman_location[1])))
-                    elif agent._game.pacman._move_direction == 'L':
-                        if grid.walkable(pacman_location[0] - 4, pacman_location[1]):
-                            end = grid.node(pacman_location[0] - 4, pacman_location[1])
-                        else:
-                            end = random.choice(grid.neighbors(grid.node(pacman_location[0], pacman_location[1])))
-                    elif agent._game.pacman._move_direction == 'R':
-                        if grid.walkable(pacman_location[0] + 4, pacman_location[1]):
-                            end = grid.node(pacman_location[0] + 4, pacman_location[1])
-                        else:
-                            end = random.choice(grid.neighbors(grid.node(pacman_location[0], pacman_location[1])))
-                    else:
-                        end = random.choice(grid.neighbors(grid.node(pacman_location[0], pacman_location[1])))
-
-                    finder = BreadthFirstFinder(diagonal_movement=DiagonalMovement.never)
-                    path, runs = finder.find_path(start, end, grid)
-                    # print(len(path))
-                    if (len(path) > 1):
-                        target_next = path[1]
-
-                        if agent_location[0] < target_next[0]:
-                            move = 'R'
-                        elif agent_location[0] > target_next[0]:
-                            move = 'L'
-                        if agent_location[1] < target_next[1]:
-                            move = 'D'
-                        elif agent_location[1] > target_next[1]:
-                            move = 'U'
-
-                        if not self.is_backtracking(agent, move) and agent.is_valid_location(agent.calculate_move_location(move)):
-                            self.last_move = move
-                            return self.last_move
-                        elif (
-                            (self.last_move != '') and agent.is_valid_location(
-                                agent.calculate_move_location(self.last_move)
-                            )
-                        ):
-                            return self.last_move
-                        else:
-                            self.last_move = ValidRandom().generate_move(agent)
-                            return self.last_move
-                    elif (
-                        (self.last_move != '') and agent.is_valid_location(
-                            agent.calculate_move_location(self.last_move)
-                        )
-                    ):
-                        return self.last_move
-                    else:
-                        self.last_move = ValidRandom().generate_move(agent)
-                        return self.last_move
-                elif (
-                    (self.last_move != '') and agent.is_valid_location(
-                        agent.calculate_move_location(self.last_move)
-                    )
-                ):
-                    return self.last_move
-                else:
-                    self.last_move = ValidRandom().generate_move(agent)
-                    return self.last_move
+        move = self.get_next_move(agent, target_location)
+        if move:
+            self.last_move = move
         else:
-            # Terrified Ghost Mode
-            agent_location = agent._current_location
+            self.last_move = self.generate_random_move(agent)
 
-            matrix = list(map(map_list_bool_to_int, np.array(agent._game.state) != 1))
+        return self.last_move
 
-            grid = Grid(matrix=matrix)
+    def get_target_location(self, agent, grid, pacman_location):
+        direction_to_move = {
+            "": (0, 0),
+            "U": (0, 4),
+            "D": (0, -4),
+            "L": (-4, 0),
+            "R": (4, 0)
+        }
 
-            start = grid.node(agent_location[0], agent_location[1])
-            end = grid.node(1, 1)
+        move_direction = agent._game.pacman._move_direction
+        move_offset = direction_to_move[move_direction]
+        new_location = (pacman_location[0] + move_offset[0], pacman_location[1] + move_offset[1])
 
-            finder = BreadthFirstFinder(diagonal_movement=DiagonalMovement.never)
-            path, runs = finder.find_path(start, end, grid)
-            # print(len(path))
-            if (len(path) > 1):
-                target_next = path[1]
+        if grid.walkable(new_location[0], new_location[1]):
+            end = grid.node(new_location[0], new_location[1])
+        else:
+            end = random.choice(grid.neighbors(grid.node(pacman_location[0], pacman_location[1])))
 
-                if agent_location[0] < target_next[0]:
-                    move = 'R'
-                elif agent_location[0] > target_next[0]:
-                    move = 'L'
-                if agent_location[1] < target_next[1]:
-                    move = 'D'
-                elif agent_location[1] > target_next[1]:
-                    move = 'U'
+        return end
 
-                if not self.is_backtracking(agent, move) and agent.is_valid_location(agent.calculate_move_location(move)):
-                    self.last_move = move
-                    return self.last_move
-                elif (
-                    (self.last_move != '') and agent.is_valid_location(
-                        agent.calculate_move_location(self.last_move)
-                    )
-                ):
-                    return self.last_move
-                else:
-                    self.last_move = ValidRandom().generate_move(agent)
-                    return self.last_move
-            elif (
-                (self.last_move != '') and agent.is_valid_location(
-                    agent.calculate_move_location(self.last_move)
-                )
-            ):
-                return self.last_move
-            else:
-                self.last_move = ValidRandom().generate_move(agent)
-                return self.last_move
+    def get_next_move(self, agent, target_location):
+        agent_location = agent._current_location
+        matrix = list(map(map_list_bool_to_int, np.array(agent._game.state) != 1))
+        grid = Grid(matrix=matrix)
+        start = grid.node(agent_location[0], agent_location[1])
+        end = self.get_target_location(agent, grid, target_location)
+        finder = BreadthFirstFinder(diagonal_movement=DiagonalMovement.never)
+        path, runs = finder.find_path(start, end, grid)
+        if len(path) > 1:
+            target_next = path[1]
+            move = ""
+            if agent_location[0] < target_next[0]:
+                move = "R"
+            elif agent_location[0] > target_next[0]:
+                move = "L"
+            elif agent_location[1] < target_next[1]:
+                move = "D"
+            elif agent_location[1] > target_next[1]:
+                move = "U"
+            if move and not self.is_backtracking(agent, move) and agent.is_valid_location(agent.calculate_move_location(move)):
+                return move
+        return None
+
+    def generate_random_move(self, agent):
+        return ValidRandom().generate_move(agent)
 
     def is_backtracking(self, agent, move):
         if agent._move_direction == 'U' and move == 'D':
