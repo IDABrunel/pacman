@@ -52,7 +52,7 @@ class BlinkyMoves:
         start = grid.node(agent_location[0], agent_location[1])
         end = grid.node(target_location[0], target_location[1])
         finder = BreadthFirstFinder(diagonal_movement=DiagonalMovement.never)
-        path, runs = finder.find_path(start, end, grid)       
+        path, runs = finder.find_path(start, end, grid)
         if len(path) > 1:
             target_next = path[1]
             move = ""
@@ -65,7 +65,7 @@ class BlinkyMoves:
             elif agent_location[1] > target_next[1]:
                 move = "U"
             if move and not self.is_backtracking(agent, move) and agent.is_valid_location(agent.calculate_move_location(move)):
-                return move      
+                return move
         return None
 
     def generate_random_move(self, agent):

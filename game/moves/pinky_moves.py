@@ -20,7 +20,7 @@ class PinkyMoves:
     def generate_move(self, agent):
         if agent._game._is_ghost_mode:
             # Terrified Ghost Mode
-            target_location = (58, 1)
+            target_location = (1, 1)
         else:
             # Scatter or Chase Mode
             if agent._game._is_scatter_mode:
