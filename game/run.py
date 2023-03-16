@@ -7,7 +7,6 @@ from matplotlib import pyplot as plt
 from game import Game
 from arduino import ArduinoRGBMatrix
 from results_display import generate_board_with_stats
-from moves.rand import ValidRandomWithMomentem, NoMovement
 from moves.blinky_moves import BlinkyMoves
 from moves.pinky_moves import PinkyMoves
 from moves.clyde_moves import ClydeMoves

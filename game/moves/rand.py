@@ -5,8 +5,11 @@ class FullRandom:
     def generate_move(self, _):
         return ['U', 'D', 'L', 'R', ''][randint(0, 4)]
 
+
 class NoMovement:
-    def generate_move(self, _):return ''
+    def generate_move(self, _):
+        return ''
+
 
 class ValidRandom:
     def generate_move(self, agent):

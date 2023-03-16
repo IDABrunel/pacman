@@ -1,10 +1,9 @@
-import math
 import random
 import numpy as np
 from pathfinding.core.diagonal_movement import DiagonalMovement
 from pathfinding.core.grid import Grid
 from pathfinding.finder.breadth_first import BreadthFirstFinder
-from .rand import ValidRandom, ValidRandomWithMomentem
+from .rand import ValidRandom
 
 
 def bool_to_int(val):
@@ -17,6 +16,7 @@ def map_list_bool_to_int(ls):
 
 class PinkyMoves:
     last_move = ''
+
     def generate_move(self, agent):
 
         if not agent._game._is_ghost_mode:
@@ -36,31 +36,31 @@ class PinkyMoves:
                     # Chase Mode
                     agent_location = agent._current_location
                     pacman_location = agent._game.pacman._current_location
-                    
+
                     matrix = list(map(map_list_bool_to_int, np.array(agent._game.state) != 1))
 
                     grid = Grid(matrix=matrix)
 
                     start = grid.node(agent_location[0], agent_location[1])
-                    
+
                     if agent._game.pacman._move_direction == 'U':
-                        if grid.walkable(pacman_location[0], pacman_location[1]+4):
-                            end = grid.node(pacman_location[0], pacman_location[1]+4)
+                        if grid.walkable(pacman_location[0], pacman_location[1] + 4):
+                            end = grid.node(pacman_location[0], pacman_location[1] + 4)
                         else:
                             end = random.choice(grid.neighbors(grid.node(pacman_location[0], pacman_location[1])))
                     elif agent._game.pacman._move_direction == 'D':
-                        if grid.walkable(pacman_location[0], pacman_location[1]-4):
-                            end = grid.node(pacman_location[0], pacman_location[1]-4)
+                        if grid.walkable(pacman_location[0], pacman_location[1] - 4):
+                            end = grid.node(pacman_location[0], pacman_location[1] - 4)
                         else:
                             end = random.choice(grid.neighbors(grid.node(pacman_location[0], pacman_location[1])))
                     elif agent._game.pacman._move_direction == 'L':
-                        if grid.walkable(pacman_location[0]-4, pacman_location[1]):
-                            end = grid.node(pacman_location[0]-4, pacman_location[1])
+                        if grid.walkable(pacman_location[0] - 4, pacman_location[1]):
+                            end = grid.node(pacman_location[0] - 4, pacman_location[1])
                         else:
                             end = random.choice(grid.neighbors(grid.node(pacman_location[0], pacman_location[1])))
                     elif agent._game.pacman._move_direction == 'R':
-                        if grid.walkable(pacman_location[0]+4, pacman_location[1]):
-                            end = grid.node(pacman_location[0]+4, pacman_location[1])
+                        if grid.walkable(pacman_location[0] + 4, pacman_location[1]):
+                            end = grid.node(pacman_location[0] + 4, pacman_location[1])
                         else:
                             end = random.choice(grid.neighbors(grid.node(pacman_location[0], pacman_location[1])))
                     else:
@@ -113,7 +113,7 @@ class PinkyMoves:
                     return self.last_move
         else:
             # Terrified Ghost Mode
-            agent_location = agent._current_location    
+            agent_location = agent._current_location
 
             matrix = list(map(map_list_bool_to_int, np.array(agent._game.state) != 1))
 
@@ -121,7 +121,7 @@ class PinkyMoves:
 
             start = grid.node(agent_location[0], agent_location[1])
             end = grid.node(1, 1)
-            
+
             finder = BreadthFirstFinder(diagonal_movement=DiagonalMovement.never)
             path, runs = finder.find_path(start, end, grid)
             # print(len(path))

@@ -12,7 +12,7 @@ from agents.pacman import Pacman
 
 class Game:
     complete = False
-    _is_scatter_mode=True
+    _is_scatter_mode = True
     _is_ghost_mode = False
     _num_time_blinky_caught = 0
     _num_time_clyde_caught = 0
@@ -80,14 +80,14 @@ class Game:
         counter = self._current_tick
         sub_counter = 0
         if counter % 28 < 7:
-            self._is_scatter_mode=True
+            self._is_scatter_mode = True
         elif counter % 28 < 27:
             if sub_counter % 20 == 0:
-                self._is_scatter_mode=False
+                self._is_scatter_mode = False
             sub_counter += 1
         else:
             sub_counter = 0
-        
+
         self.blinky.handle_move(blinky_move)
         self.pinky.handle_move(pinky_move)
         self.inky.handle_move(inky_move)
@@ -154,7 +154,7 @@ class Game:
 
     def calculate_board(self):
         current_state = copy.deepcopy(self.state)
-        
+
         current_state[self.pacman._current_location[1]][self.pacman._current_location[0]] = self.pacman.id
 
         agent_locations = [
@@ -171,7 +171,6 @@ class Game:
             else:
                 coordinate_counts[location] = [agent]
 
-
         for location, agents in coordinate_counts.items():
             if len(agents) > 1:
                 random.shuffle(agents)
@@ -181,7 +180,6 @@ class Game:
                 x, y = location
                 current_state[y][x] = agents[0].id
 
-            
         return current_state
 
     def change_all_ghost_id(self, new_id):
