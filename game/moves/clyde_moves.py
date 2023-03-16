@@ -38,7 +38,7 @@ class ClydeMoves:
                     pacman_location = agent._game.pacman._current_location
                     
                     dist = math.sqrt(pow(agent_location[0] - pacman_location[0], 2) + pow(agent_location[1] - pacman_location[1], 2))
-                    if dist > 8:
+                    if dist > 4:
                     
                         matrix = list(map(map_list_bool_to_int, np.array(agent._game.state) != 1))
 
