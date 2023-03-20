@@ -10,6 +10,7 @@ class Pacman:
         self._nuggets_collected = 0
         self._fruit_collected = 0
         self._ghost_killing_nuggets_collected = 0
+        self._move_direction = ''
 
     def handle_move(self, move):
         proposed_location = self.calculate_move_location(move)
@@ -41,18 +42,23 @@ class Pacman:
 
     def calculate_move_location(self, move):
         if move == 'U':
+            self._move_direction = 'U'
             return self._game.normalise_coordinates(
                 [self._current_location[0], self._current_location[1] - 1])
         elif move == 'D':
+            self._move_direction = 'D'
             return self._game.normalise_coordinates(
                 [self._current_location[0], self._current_location[1] + 1])
         elif move == 'L':
+            self._move_direction = 'L'
             return self._game.normalise_coordinates(
                 [self._current_location[0] - 1, self._current_location[1]])
         elif move == 'R':
+            self._move_direction = 'R'
             return self._game.normalise_coordinates(
                 [self._current_location[0] + 1, self._current_location[1]])
         elif move == '':
+            self._move_direction = ''
             return self._current_location
 
         raise Exception('Invalid Move Identifier')

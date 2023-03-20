@@ -6,6 +6,11 @@ class FullRandom:
         return ['U', 'D', 'L', 'R', ''][randint(0, 4)]
 
 
+class NoMovement:
+    def generate_move(self, _):
+        return ''
+
+
 class ValidRandom:
     def generate_move(self, agent):
         possi_moves = ['U', 'D', 'L', 'R', '']
@@ -28,7 +33,6 @@ class ValidRandomWithMomentem:
             )
         ):
             return self.last_move
-
-        self.last_move = ValidRandom().generate_move(agent)
-
-        return self.last_move
+        else:
+            self.last_move = ValidRandom().generate_move(agent)
+            return self.last_move

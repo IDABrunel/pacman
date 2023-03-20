@@ -7,8 +7,10 @@ from matplotlib import pyplot as plt
 from game import Game
 from arduino import ArduinoRGBMatrix
 from results_display import generate_board_with_stats
-from moves.rand import ValidRandomWithMomentem
-from moves.smartghost import SmartGhost
+from moves.blinky_moves import BlinkyMoves
+from moves.pinky_moves import PinkyMoves
+from moves.clyde_moves import ClydeMoves
+from moves.inky_moves import InkyMoves
 
 INIT_BOARD_STATE = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -73,10 +75,10 @@ board = Game(
     logging_enabled=args.logging
 )
 
-blinky_move_factory = ValidRandomWithMomentem()
-pinky_move_factory = SmartGhost()
-inky_move_factory = ValidRandomWithMomentem()
-clyde_move_factory = ValidRandomWithMomentem()
+blinky_move_factory = BlinkyMoves()
+pinky_move_factory = PinkyMoves()
+inky_move_factory = InkyMoves()
+clyde_move_factory = ClydeMoves()
 
 if args.strategy == 'full_random':
     from moves.rand import FullRandom
