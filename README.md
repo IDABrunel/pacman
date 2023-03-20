@@ -4,11 +4,10 @@
 
 Python matrix Pacman environment for teaching and experimentation in Programming, Algorithms and Machine Learning.
 
-/arduino - NeoPixel LED Matrix API.
-/game - Pacman logic and Python utils for communicating with `/arduino`.
-/docs - Documentation!
+* `/arduino` - NeoPixel LED Matrix API.
+* `/game` - Pacman logic and Python utils for communicating with `/arduino`.
+* `/docs` - Documentation!
 
-=======
 Developed by Doctoral Researchers at Brunel University London as part of a cross-disciplinary experiment.
 
 
