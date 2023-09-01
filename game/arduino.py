@@ -32,7 +32,7 @@ class ArduinoRGBMatrix:
 
         for opp in op_arrs:
             for i in opp:
-                if (type(i) == bytes):
+                if isinstance(i, bytes):
                     opsbatch += i
                 else:
                     opsbatch += bytes([int(i)])
