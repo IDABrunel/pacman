@@ -1,5 +1,5 @@
 matplotlib==3.7.2
-numpy==1.25.2
+numpy==1.26.0
 pillow==10.0.0
 pyserial==3.5
 pathfinding==1.0.4
